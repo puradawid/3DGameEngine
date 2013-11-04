@@ -35,6 +35,12 @@ static struct Camera {
         GLdouble y;
         GLdouble z;
     } center;
+    
+    struct Up {
+        GLdouble x;
+        GLdouble y;
+        GLdouble z;
+    } up;
 } camera;
 
 struct Camera initialize_camera()
@@ -45,7 +51,10 @@ struct Camera initialize_camera()
     stc.eye.z = 0.0;
     stc.center.x = 0.0;
     stc.center.y = 0.0;
-    stc.center.z = -100;
+    stc.center.z = -1;
+    stc.up.x = 0;
+    stc.up.y = 1;
+    stc.up.z = 0;
     return stc;
 }
 
@@ -93,11 +102,6 @@ void render_polygon(double x, double y) {
     glEnd();
 }
 
-void menu_function(int parameter) {
-    if (parameter == 1)
-        exit(0);
-}
-
 
 //open_gl_init initalize the OpenG
 
@@ -116,9 +120,12 @@ void display(void) {
     
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z, camera.center.x,
-              camera.center.y, camera.center.z, 0, 1, 0);
-
+    //gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z, camera.center.x,
+    //          camera.center.y, camera.center.z, camera.up.x, camera.up.y, camera.up.z);
+    
+    glRotatef(camera.center.x, 0, 1.0 ,0);
+    glRotatef(camera.center.y, 1.0, 0 ,0);
+    glTranslatef(camera.eye.x, camera.eye.y, camera.eye.z);
     for(int i=0; i < cubes.size(); i++)
        cubes[i]->render();
 
@@ -127,17 +134,18 @@ void display(void) {
 }
 
 void reshape(int width, int height) {
-    glViewport(0, 0, width, height);
+    //glViewport(0, 0, width, height);
 
     glMatrixMode(GL_PROJECTION);
 
     glLoadIdentity();
+    
+    gluPerspective (60, (GLfloat)width / (GLfloat)height, 1.0, 1000.0);
+    //if (width < height && width > 0)
+    //    glFrustum(-2.0, 2.0, -2.0 * height / width, 2.0 * height / width, 1.0, 5.0);
 
-    if (width < height && width > 0)
-        glFrustum(-2.0, 2.0, -2.0 * height / width, 2.0 * height / width, 1.0, 5.0);
-
-    if (width >= height && height > 0)
-        glFrustum(-2.0 * width / height, 2.0 * width / height, -2.0, 2.0, 1.0, 5.0);
+    //if (width >= height && height > 0)
+    //    glFrustum(-2.0 * width / height, 2.0 * width / height, -2.0, 2.0, 1.0, 5.0);
 
     display();
 }
@@ -163,12 +171,18 @@ void menu_function_context(int parameter) {
 
 void keyboard_event(unsigned char key, int x, int y) {
     switch (key) {
-        case '+':
-            fovy++;
-        break;
-        case '-':
-            fovy--;
-        break;
+        case 'w':
+            camera.center.y += 1;
+            break;
+        case 's':
+            camera.center.y -= 1;
+            break;
+        case 'a':
+            camera.center.x -= 1;
+            break;
+        case 'd':
+            camera.center.x += 1;
+            break;
     }
     reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 }
@@ -193,6 +207,19 @@ void keyboard_special_event(int event, int x, int y)
     reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 }
 
+void menu_function(int parameter) {
+    switch(parameter)
+    {
+        case 1:
+            exit(0);
+            break;
+        case 2: 
+            camera = initialize_camera();
+            break;
+    }
+    reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+}
+
 inline void open_gl_init() {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_SHORT);
@@ -202,6 +229,7 @@ inline void open_gl_init() {
     //menu adding?
     glutCreateMenu(menu_function); //creation by passing handling function
     glutAddMenuEntry("Exit", 1); //adding menu entry as Exit
+    glutAddMenuEntry("Reset position", 2); //adding menu entry as Exit
     glutAttachMenu(GLUT_RIGHT_BUTTON); //attaching menu as right button event
 
     //context menu
