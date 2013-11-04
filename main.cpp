@@ -98,29 +98,8 @@ void menu_function(int parameter) {
         exit(0);
 }
 
-void menu_function_context(int parameter) {
-    //there is code to mainenance scene
-}
-
 
 //open_gl_init initalize the OpenG
-
-inline void open_gl_init() {
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_SHORT);
-    GLfloat globalAmbient[] = { 0.2, 0.2, 0.2, 1.0 };
-    glLightModelfv( GL_LIGHT_MODEL_AMBIENT, globalAmbient );
-
-    //menu adding?
-    glutCreateMenu(menu_function); //creation by passing handling function
-    glutAddMenuEntry("Exit", 1); //adding menu entry as Exit
-    glutAttachMenu(GLUT_RIGHT_BUTTON); //attaching menu as right button event
-
-    //context menu
-    glutCreateMenu(menu_function_context);
-    glutAddMenuEntry("Reload scene", 1);
-    glutAttachMenu(GLUT_LEFT_BUTTON);
-}
 
 inline void glut_init(int* argc, char** argv) {
     glutInit(argc, argv);
@@ -163,6 +142,25 @@ void reshape(int width, int height) {
     display();
 }
 
+void menu_function_context(int parameter) {
+    switch(parameter)
+    {
+        case 1:
+            //handle wire
+            cubes[0]->setStrategy(new LinesRenderStrategy(0.1, 0.1, 0.1));
+            break;
+        case 2:
+            //handle solid
+            cubes[0]->setStrategy(new MaterialRenderStrategy(0.1, 0.1, 0.1));
+            break;
+        case 3:
+            //handle textured
+            break;
+    }
+    //..at least refresh screen? :D
+    reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+}
+
 void keyboard_event(unsigned char key, int x, int y) {
     switch (key) {
         case '+':
@@ -195,6 +193,25 @@ void keyboard_special_event(int event, int x, int y)
     reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 }
 
+inline void open_gl_init() {
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_SHORT);
+    GLfloat globalAmbient[] = { 0.2, 0.2, 0.2, 1.0 };
+    glLightModelfv( GL_LIGHT_MODEL_AMBIENT, globalAmbient );
+
+    //menu adding?
+    glutCreateMenu(menu_function); //creation by passing handling function
+    glutAddMenuEntry("Exit", 1); //adding menu entry as Exit
+    glutAttachMenu(GLUT_RIGHT_BUTTON); //attaching menu as right button event
+
+    //context menu
+    glutCreateMenu(menu_function_context);
+    glutAddMenuEntry("Lines", 1);
+    glutAddMenuEntry("Solid", 2);
+    glutAddMenuEntry("Textured", 3);
+    glutAttachMenu(GLUT_LEFT_BUTTON);
+}
+
 int main(int argc, char** argv) 
 {
     glut_init(&argc, argv); //initialize first GLUT window
@@ -218,7 +235,7 @@ int main(int argc, char** argv)
     c2 = new CubeGL(p2, 0.4);
     c2->setStrategy(new LinesRenderStrategy(0.1,0.5,0));
     
-    cubes.push_back(c1);
+    //cubes.push_back(c1);
     cubes.push_back(c2);
     
     camera = initialize_camera();
