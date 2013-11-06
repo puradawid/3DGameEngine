@@ -13,6 +13,8 @@ public:
     virtual ~MaterialRenderStrategy();
 protected:
     Material *material;
+    vector<double*> normals;
+    int counter;
 
 };
 

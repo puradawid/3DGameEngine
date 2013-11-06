@@ -59,13 +59,20 @@ void LinesRenderStrategy::renderPolygon(vector<Point*>* polygon)
 
 void LinesRenderStrategy::preObject()
 {
-    glDisable(GL_LIGHTING);
+    GLboolean light;
+    glGetBooleanv(GL_LIGHTING, &light);
+    if(light == GL_TRUE)
+        glDisable(GL_LIGHTING);
     glColor3f(this->r, this->g, this->b);
     glBegin(GL_LINES);
 }
 
 void LinesRenderStrategy::postObject()
 {
+    GLboolean light;
+    glGetBooleanv(GL_LIGHTING, &light);
+    if(light == GL_TRUE)
+        glEnable(GL_LIGHTING);
     glEnd();
 }
 

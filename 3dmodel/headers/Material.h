@@ -20,20 +20,28 @@ public:
         m_Shininess = shininess;
         
         float Ambient[] = {0.2, 0.2, 0.2, 1.0};
-        float Diffuse[] = {0.8, 0.8, 0.8, 1.0};
-        float Specular[] = {0.0, 0.0, 0.0, 1.0};
-        float Emission[] = {0.0, 0.0, 0.0, 1.0};
-        float Shininess = 0.0;
+        float Diffuse[] = {1, 1, 1, 1};
+        float Specular[] = {0.2, 0.2, 0.2, 1.0};
+        float Emission[] = {0.1, 0.1, 0.1, 1.0};
+        float Shininess = 0.1;
         
-        if(m_Ambient == NULL) m_Ambient = (float*)Ambient;
-        if(m_Diffuse == NULL) m_Diffuse = (float*)Diffuse;
-        if(m_Specular == NULL) m_Specular = (float*)Specular;
-        if(m_Emission == NULL) m_Emission = (float*)Emission;
-        if(m_Shininess == NULL) m_Shininess = Shininess;
+        m_Ambient = copyArray((float*)Ambient, 4);
+        m_Diffuse = copyArray((float*)Diffuse, 4);
+        m_Specular = copyArray((float*)Specular, 4);
+        m_Emission = copyArray((float*)Emission, 4);
+        m_Shininess = Shininess;
         
         
     }
- 
+    
+    float* copyArray(float* src, int size)
+    {
+        float *dst = new float[size];
+        for(int i = 0; i < size; i++)
+            dst[i] = src[i];
+        return dst;
+    }
+    
     void Apply()
     {
         glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, m_Ambient );
