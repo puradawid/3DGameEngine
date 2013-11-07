@@ -2,6 +2,13 @@
 #include <iostream>
 #include <GL\gl.h>
 #include <GL\glu.h>
+//#include "openal/alc.h"
+#include <conio.h>
+#include <stdlib.h>
+#include "openal/al.h"
+#include "openal/alc.h"
+//#include "openal/alu.h"
+#include "openal/alut.h"
 #include <vector>
 #include "glut\glut.h"
 
@@ -20,6 +27,27 @@ enum Perspective {
     ORTHOGONAL,
     PERSPECTIVE
 };
+
+//buffer of sound
+ALuint Buffer;
+
+//position of source
+ALuint Source;
+
+// Position of the source sound.
+ALfloat *SourcePos;
+
+// Velocity of the source sound.
+ALfloat *SourceVel;
+
+// Position of the listener.
+ALfloat *ListenerPos;
+
+// Velocity of the listener.
+ALfloat *ListenerVel;
+
+// Orientation of the listener. (first 3 elements are "at", second 3 are "up")
+ALfloat *ListenerOri;
 
 static Perspective perspective;
 
@@ -90,16 +118,13 @@ void display(void) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glLightfv(GL_LIGHT0, GL_POSITION, light);
-    //gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z, camera.center.x,
-    //          camera.center.y, camera.center.z, camera.up.x, camera.up.y, camera.up.z);
-    //changeCameraPos(light);
+    
     glRotatef(camera.center.x, 0, 1.0, 0);
     glRotatef(camera.center.y, 1.0, 0, 0);
     glTranslatef(camera.eye.x, camera.eye.y, camera.eye.z);
     for (int i = 0; i < cubes.size(); i++)
         cubes[i]->render();
-
-    //glFlush();
+    
     glutSwapBuffers();
 }
 
@@ -151,10 +176,10 @@ void keyboard_event(unsigned char key, int x, int y) {
             camera.center.x += 1;
             break;
 	case 'r':
-	    camera.eye.y += 1;
+	    camera.eye.y += 0.1;
 	    break;
 	case 'f':
-	   camera.eye.y -= 1;
+	   camera.eye.y -= 0.1;
 	break; 
     }
     reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
@@ -252,9 +277,36 @@ inline void open_gl_init() {
     perspective = PERSPECTIVE;
 }
 
+inline void set3D(float* src, double a, double b, double c)
+{
+    src[0] = a;
+    src[1] = b;
+    src[2] = c;
+}
+
+inline void openAlInit()
+{
+    // Position of the source sound.
+set3D(SourcePos, 0.0, 0.0, 0.0);
+
+// Velocity of the source sound.
+set3D(SourceVel, 0.0, 0.0, 0.0);
+
+
+// Position of the listener.
+set3D(ListenerPos, 0.0, 0.0, 0.0);
+
+// Velocity of the listener.
+set3D(ListenerVel, 0.0, 0.0, 0.0);
+
+// Orientation of the listener. (first 3 elements are "at", second 3 are "up")
+set3D(ListenerOri, 0.0, 0.0, -1.0);
+set3D(ListenerOri+3, 0.0, 1.0, 0.0);
+}
+
 int main(int argc, char** argv) {
     glut_init(&argc, argv); //initialize first GLUT window
-
+    //alutInit(&argc, (signed char**)argv);  //init alut
     //init strategies
     lrs = new LinesRenderStrategy(0.1, 0.1, 0.1);
     mrs = new MaterialRenderStrategy(0.1, 0.5, 0.1);
@@ -266,7 +318,7 @@ int main(int argc, char** argv) {
     light[2] = 1.0;
     light[3] = 1;
 
-    Point p2(0, 0, -2);
+    Point p2(-0.5, 0, -5);
     CubeGL *c;
     c = new CubeGL(p2, 1);
     c->setStrategy(lrs);

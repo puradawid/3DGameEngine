@@ -44,11 +44,11 @@ public:
     
     void Apply()
     {
-        glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, m_Ambient );
-        glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, m_Diffuse);
-        glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, m_Specular );
-        glMaterialfv( GL_FRONT_AND_BACK, GL_EMISSION, m_Emission );
-        glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, m_Shininess );
+        glMaterialfv( GL_FRONT, GL_AMBIENT, m_Ambient );
+        glMaterialfv( GL_FRONT, GL_DIFFUSE, m_Diffuse);
+        glMaterialfv( GL_FRONT, GL_SPECULAR, m_Specular );
+        glMaterialfv( GL_FRONT, GL_EMISSION, m_Emission );
+        glMaterialf( GL_FRONT, GL_SHININESS, m_Shininess );
     }
 protected:
     float* m_Ambient;
