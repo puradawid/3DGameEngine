@@ -2,13 +2,8 @@
 #include <iostream>
 #include <GL\gl.h>
 #include <GL\glu.h>
-//#include "openal/alc.h"
 #include <conio.h>
 #include <stdlib.h>
-#include "openal/al.h"
-#include "openal/alc.h"
-//#include "openal/alu.h"
-#include "openal/alut.h"
 #include <vector>
 #include "glut\glut.h"
 
@@ -28,26 +23,6 @@ enum Perspective {
     PERSPECTIVE
 };
 
-//buffer of sound
-ALuint Buffer;
-
-//position of source
-ALuint Source;
-
-// Position of the source sound.
-ALfloat *SourcePos;
-
-// Velocity of the source sound.
-ALfloat *SourceVel;
-
-// Position of the listener.
-ALfloat *ListenerPos;
-
-// Velocity of the listener.
-ALfloat *ListenerVel;
-
-// Orientation of the listener. (first 3 elements are "at", second 3 are "up")
-ALfloat *ListenerOri;
 
 static Perspective perspective;
 
@@ -284,29 +259,10 @@ inline void set3D(float* src, double a, double b, double c)
     src[2] = c;
 }
 
-inline void openAlInit()
-{
-    // Position of the source sound.
-set3D(SourcePos, 0.0, 0.0, 0.0);
-
-// Velocity of the source sound.
-set3D(SourceVel, 0.0, 0.0, 0.0);
-
-
-// Position of the listener.
-set3D(ListenerPos, 0.0, 0.0, 0.0);
-
-// Velocity of the listener.
-set3D(ListenerVel, 0.0, 0.0, 0.0);
-
-// Orientation of the listener. (first 3 elements are "at", second 3 are "up")
-set3D(ListenerOri, 0.0, 0.0, -1.0);
-set3D(ListenerOri+3, 0.0, 1.0, 0.0);
-}
 
 int main(int argc, char** argv) {
     glut_init(&argc, argv); //initialize first GLUT window
-    //alutInit(&argc, (signed char**)argv);  //init alut
+
     //init strategies
     lrs = new LinesRenderStrategy(0.1, 0.1, 0.1);
     mrs = new MaterialRenderStrategy(0.1, 0.5, 0.1);
