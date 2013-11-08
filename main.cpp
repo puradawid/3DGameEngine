@@ -1,11 +1,11 @@
 #include <cstdlib>
 #include <iostream>
-#include <GL\gl.h>
-#include <GL\glu.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include <conio.h>
 #include <stdlib.h>
 #include <vector>
-#include "glut\glut.h"
+#include "glut/glut.h"
 
 #include "3dmodel/headers/Point.h"
 #include "3dmodel/headers/Cube.h"
