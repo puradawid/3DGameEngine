@@ -1,11 +1,20 @@
 #include <cstdlib>
 #include <iostream>
-#include <GL\gl.h>
-#include <GL\glu.h>
-#include <conio.h>
-#include <stdlib.h>
+
+//OpenGL for windows
+#ifdef _WIN32
+	#include <GL/gl.h>
+	#include <GL/glu.h>
+	#include <GL/glut.h>
+#else //OpenGL for Linux and other stuff (if there will be no OS, add another)
+	#include <GL/gl.h>
+	#include <GL/glu.h>
+	#include <GL/freeglut.h>
+#endif
+
+
+
 #include <vector>
-#include "glut\glut.h"
 
 #include "3dmodel/headers/Point.h"
 #include "3dmodel/headers/Cube.h"
@@ -113,7 +122,7 @@ void reshape(int width, int height) {
     if (perspective == PERSPECTIVE)
         gluPerspective(60, (GLfloat) width / (GLfloat) height, 1.0, 1000.0);
     else
-        glOrtho(0, width, 0, height, 0, 1000); //it is not working ?
+        glOrtho(0, width, 0, height, 0, 10); //it is not working ?
     display();
 }
 
