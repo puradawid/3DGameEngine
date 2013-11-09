@@ -101,14 +101,16 @@ void display(void) {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glLightfv(GL_LIGHT0, GL_POSITION, light);
-    
     glRotatef(camera.center.x, 0, 1.0, 0);
     glRotatef(camera.center.y, 1.0, 0, 0);
     glTranslatef(camera.eye.x, camera.eye.y, camera.eye.z);
+
+    //sets light position with camera
+    glLightfv(GL_LIGHT0, GL_POSITION, light);
+    
     for (int i = 0; i < cubes.size(); i++)
         cubes[i]->render();
-    
+
     glutSwapBuffers();
 }
 
@@ -120,7 +122,7 @@ void reshape(int width, int height) {
     glLoadIdentity();
 
     if (perspective == PERSPECTIVE)
-        gluPerspective(60, (GLfloat) width / (GLfloat) height, 1.0, 1000.0);
+        gluPerspective(60, (GLfloat) width / (GLfloat) height, 1.0, 10.0);
     else
         glOrtho(0, width, 0, height, 0, 10); //it is not working ?
     display();
@@ -261,11 +263,28 @@ inline void open_gl_init() {
     perspective = PERSPECTIVE;
 }
 
-inline void set3D(float* src, double a, double b, double c)
+//"old" position of mouse
+int x_mouse_pos = 0;
+int y_mouse_pos = 0;
+
+void mouseFunction(int x, int y)
 {
-    src[0] = a;
-    src[1] = b;
-    src[2] = c;
+	if(x_mouse_pos == 0 && y_mouse_pos == 0)
+		{ x_mouse_pos = x; y_mouse_pos = y; return; }
+	//there is changing x and y;
+	if(x - x_mouse_pos > 0)
+		camera.center.x += 0.5;
+	if(x - x_mouse_pos < 0)
+		camera.center.x -= 0.5;
+	if(y - y_mouse_pos > 0)
+		camera.center.y += 0.5;
+	if(y - y_mouse_pos < 0)
+		camera.center.y -= 0.5;
+
+	//store old position
+	x_mouse_pos = x; y_mouse_pos = y;
+
+	reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 }
 
 
@@ -296,6 +315,7 @@ int main(int argc, char** argv) {
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard_event);
     glutSpecialFunc(keyboard_special_event);
+    glutPassiveMotionFunc(mouseFunction);
 
     //provide control for GLUT
     glutMainLoop();
