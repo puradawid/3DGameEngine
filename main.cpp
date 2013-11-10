@@ -101,8 +101,10 @@ void display(void) {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glRotatef(camera.center.x, 0, 1.0, 0);
-    glRotatef(camera.center.y, 1.0, 0, 0);
+    //if you want to move
+    glRotatef(camera.center.x, 1.0, 0, 0);
+    glRotatef(camera.center.y, 0, 1.0, 0);
+
     glTranslatef(camera.eye.x, camera.eye.y, camera.eye.z);
 
     //sets light position with camera
@@ -150,16 +152,16 @@ void menu_function_context(int parameter) {
 void keyboard_event(unsigned char key, int x, int y) {
     switch (key) {
         case 'w':
-            camera.center.y += 1;
+            camera.center.x += 1;
             break;
         case 's':
-            camera.center.y -= 1;
-            break;
-        case 'a':
             camera.center.x -= 1;
             break;
+        case 'a':
+            camera.center.y -= 1;
+            break;
         case 'd':
-            camera.center.x += 1;
+            camera.center.y += 1;
             break;
 	case 'r':
 	    camera.eye.y += 0.1;
