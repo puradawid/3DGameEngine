@@ -106,8 +106,8 @@ void display(void) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     //if you want to move
-    glRotatef(camera.center.x, 1.0, 0, 0);
-    glRotatef(camera.center.y, 0, 1.0, 0);
+    glRotatef(camera.center.y, 1.0, 0, 0);
+    glRotatef(camera.center.x, 0, 1.0, 0);
 
     glTranslatef(camera.eye.x, camera.eye.y, camera.eye.z);
 
