@@ -17,7 +17,7 @@ Figure3D::~Figure3D() {
 
 void Figure3D::addPolygon(Point** points, int size)
 {
-    if(size < 0 || points == NULL) return;
+    if(size < 0 || points == 0x00) return;
     vector<Point*> *new_points = new vector<Point*>(size);
     for(int i=0; i < size; i++)
         (*new_points)[i] = new Point(*(points[i]));
