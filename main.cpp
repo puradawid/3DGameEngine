@@ -65,7 +65,7 @@ static struct Camera {
     void rotateY(float angle) {if(angle > 0 && center.y >= 360) center.y = 0; else center.y += angle;}
     void move(float x, float z) {
     	//rotate vector x, z in point 0,0;
-    	float angle = (center.x/360) * M_PI;
+    	float angle = (center.x/180) * M_PI;
     	float x_r = x*cos(angle) - z*sin(angle);
     	float z_r = x*sin(angle) + z*cos(angle);
     	//add it to existing position
@@ -127,6 +127,14 @@ void display(void) {
     
     for (int i = 0; i < cubes.size(); i++)
         cubes[i]->render();
+
+    //temporarily render floor - not elegant but enough for now
+    glBegin(GL_QUADS);
+    	glVertex3f(-1000.0, -0.5, 1000.0);
+    	glVertex3f(1000.0, -0.5, 1000.0);
+    	glVertex3f(1000.0, -0.5, -1000.0);
+    	glVertex3f(-1000.0, -0.5, -1000.0);
+    glEnd();
 
     glutSwapBuffers();
 }
@@ -230,7 +238,7 @@ void menu_function(int parameter) {
 
 inline void open_gl_init() {
     glEnable(GL_DEPTH_TEST);
-    //glDepthFunc(GL_SHORT);
+    glDepthFunc(GL_SHORT);
 
     //menu adding?
     glutCreateMenu(menu_function); //creation by passing handling function
