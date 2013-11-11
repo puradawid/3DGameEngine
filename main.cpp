@@ -58,6 +58,10 @@ static struct Camera {
         GLdouble y;
         GLdouble z;
     } up;
+
+    //rotateFunction -> more than important
+    void rotateX(float angle) {if(angle > 0 && center.x >= 360) center.x = 0; else center.x += angle;}
+    void rotateY(float angle) {if(angle > 0 && center.y >= 360) center.y = 0; else center.y += angle;}
 } camera;
 
 static LinesRenderStrategy* lrs;
@@ -228,9 +232,12 @@ inline void open_gl_init() {
     glutAddMenuEntry("Textured", 3);
     glutAttachMenu(GLUT_LEFT_BUTTON);
 
+    //general settings
     glShadeModel(GL_SMOOTH);
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_NORMALIZE);
+
+    //light settings
     GLfloat light_diffuse[] = {1, 1, 1, 1};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
     GLfloat light_ambient[] = {0.2, 0.2, 0.2, 1};
@@ -275,13 +282,13 @@ void mouseFunction(int x, int y)
 		{ x_mouse_pos = x; y_mouse_pos = y; return; }
 	//there is changing x and y;
 	if(x - x_mouse_pos > 0)
-		camera.center.x += 0.5;
+		camera.rotateX(0.7);
 	if(x - x_mouse_pos < 0)
-		camera.center.x -= 0.5;
+		camera.rotateX(-0.7);
 	if(y - y_mouse_pos > 0)
-		camera.center.y += 0.5;
+		camera.rotateY(0.7);
 	if(y - y_mouse_pos < 0)
-		camera.center.y -= 0.5;
+		camera.rotateY(-0.7);
 
 	//store old position
 	x_mouse_pos = x; y_mouse_pos = y;
