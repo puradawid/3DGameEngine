@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <math.h>
 
 //OpenGL for windows
 #ifdef _WIN32
@@ -12,7 +13,7 @@
 	#include <GL/freeglut.h>
 #endif
 
-
+#define _USE_MATH_DEFINES
 
 #include <vector>
 
@@ -62,6 +63,16 @@ static struct Camera {
     //rotateFunction -> more than important
     void rotateX(float angle) {if(angle > 0 && center.x >= 360) center.x = 0; else center.x += angle;}
     void rotateY(float angle) {if(angle > 0 && center.y >= 360) center.y = 0; else center.y += angle;}
+    void move(float x, float z) {
+    	//rotate vector x, z in point 0,0;
+    	float angle = (center.x/360) * M_PI;
+    	float x_r = x*cos(angle) - z*sin(angle);
+    	float z_r = x*sin(angle) + z*cos(angle);
+    	//add it to existing position
+    	eye.z += z_r;
+    	eye.x += x_r;
+    	printf("%f %f moved by %f (%f) to %f %f\n", x, z, angle, center.x, x_r, z_r );
+    }
 } camera;
 
 static LinesRenderStrategy* lrs;
@@ -180,16 +191,20 @@ void keyboard_event(unsigned char key, int x, int y) {
 void keyboard_special_event(int event, int x, int y) {
     switch (event) {
         case GLUT_KEY_LEFT:
-            camera.eye.x -= 0.1;
+            camera.move(-0.1, 0);
+        	//camera.eye.x -= 0.1;
             break;
         case GLUT_KEY_RIGHT:
-            camera.eye.x += 0.1;
+            camera.move(0.1, 0);
+        	//camera.eye.x += 0.1;
             break;
         case GLUT_KEY_UP:
-            camera.eye.z += 0.1;
+            camera.move(0, 0.1);
+        	//camera.eye.z += 0.1;
             break;
         case GLUT_KEY_DOWN:
-            camera.eye.z -= 0.1;
+            camera.move(0, -0.1);
+        	//camera.eye.z -= 0.1;
             break;
     }
     reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
