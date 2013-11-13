@@ -199,11 +199,11 @@ void keyboard_event(unsigned char key, int x, int y) {
 void keyboard_special_event(int event, int x, int y) {
     switch (event) {
         case GLUT_KEY_LEFT:
-            camera.move(-0.1, 0);
+            camera.move(0.1, 0);
         	//camera.eye.x -= 0.1;
             break;
         case GLUT_KEY_RIGHT:
-            camera.move(0.1, 0);
+            camera.move(-0.1, 0);
         	//camera.eye.x += 0.1;
             break;
         case GLUT_KEY_UP:
