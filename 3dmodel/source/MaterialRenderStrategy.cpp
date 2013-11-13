@@ -29,7 +29,7 @@ inline void setNormals(vector<double*>* v)
 MaterialRenderStrategy::MaterialRenderStrategy(double r, double g, double b)
         : LinesRenderStrategy(r, g, b)
 {
-    material = new Material(NULL, NULL, NULL, NULL, NULL);
+    material = new Material(NULL, NULL, NULL, NULL, 0.0);
     counter = 0;
     setNormals(&normals);
 }
@@ -37,7 +37,7 @@ MaterialRenderStrategy::MaterialRenderStrategy(double r, double g, double b)
 MaterialRenderStrategy::MaterialRenderStrategy(const MaterialRenderStrategy& orig)
         : LinesRenderStrategy(orig)
 {
-    material = new Material(NULL, NULL, NULL, NULL, NULL);
+    material = new Material(NULL, NULL, NULL, NULL, 0.0);
     counter = 0;
     setNormals(&normals);
 }

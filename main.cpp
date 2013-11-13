@@ -71,7 +71,6 @@ static struct Camera {
     	//add it to existing position
     	eye.z += z_r;
     	eye.x += x_r;
-    	printf("%f %f moved by %f (%f) to %f %f\n", x, z, angle, center.x, x_r, z_r );
     }
 } camera;
 
