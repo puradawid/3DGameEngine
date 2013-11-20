@@ -199,19 +199,15 @@ void keyboard_special_event(int event, int x, int y) {
     switch (event) {
         case GLUT_KEY_LEFT:
             camera.move(0.1, 0);
-        	//camera.eye.x -= 0.1;
             break;
         case GLUT_KEY_RIGHT:
             camera.move(-0.1, 0);
-        	//camera.eye.x += 0.1;
             break;
         case GLUT_KEY_UP:
             camera.move(0, 0.1);
-        	//camera.eye.z += 0.1;
             break;
         case GLUT_KEY_DOWN:
             camera.move(0, -0.1);
-        	//camera.eye.z -= 0.1;
             break;
     }
     reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
