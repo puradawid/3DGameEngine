@@ -50,8 +50,8 @@ void LinesRenderStrategy::renderPolygon(vector<Point*>* polygon)
             p2 = (*polygon)[0];
         else
             p2 = (*polygon)[j+1];
-        glVertex3f(p1->x(), p1->y(), p1->z());
-        glVertex3f(p2->x(), p2->y(), p2->z());
+        glVertex3f(p1->x, p1->y, p1->z);
+        glVertex3f(p2->x, p2->y, p2->z);
     }
     postObject();
         

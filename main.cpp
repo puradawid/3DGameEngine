@@ -23,6 +23,8 @@
 #include "3dmodel/headers/LinesRenderStrategy.h"
 #include "3dmodel/headers/MaterialRenderStrategy.h"
 #include "3dmodel/headers/TextureRenderStrategy.h"
+#include "3dmodel/headers/Camera.h"
+#include "3dmodel/headers/Scene.h"
 
 using namespace std;
 
@@ -36,50 +38,20 @@ enum Perspective {
 
 static Perspective perspective;
 
+Scene world;
+
 GLfloat* light;
 
 //render method
 
-static struct Camera {
-
-    struct Eye {
-        GLdouble x;
-        GLdouble y;
-        GLdouble z;
-    } eye;
-
-    struct Center {
-        GLdouble x;
-        GLdouble y;
-        GLdouble z;
-    } center;
-
-    struct Up {
-        GLdouble x;
-        GLdouble y;
-        GLdouble z;
-    } up;
-
-    //rotateFunction -> more than important
-    void rotateX(float angle) {if(angle > 0 && center.x >= 360) center.x = 0; else center.x += angle;}
-    void rotateY(float angle) {if(angle > 0 && center.y >= 360) center.y = 0; else center.y += angle;}
-    void move(float x, float z) {
-    	//rotate vector x, z in point 0,0;
-    	float angle = (center.x/180) * M_PI;
-    	float x_r = x*cos(angle) - z*sin(angle);
-    	float z_r = x*sin(angle) + z*cos(angle);
-    	//add it to existing position
-    	eye.z += z_r;
-    	eye.x += x_r;
-    }
-} camera;
+Camera camera;
 
 static LinesRenderStrategy* lrs;
 static MaterialRenderStrategy* mrs;
 static TextureRenderStrategy* trs;
 
-struct Camera initialize_camera() {
-    struct Camera stc;
+Camera initialize_camera() {
+    Camera stc;
     stc.eye.x = 0.0;
     stc.eye.y = 0.0;
     stc.eye.z = 0.0;
@@ -97,6 +69,7 @@ inline void glut_init(int* argc, char** argv) {
     glutInitWindowSize(800, 600);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     glutCreateWindow("This is test window");
+    glutSetCursor(GLUT_CURSOR_NONE);
 }
 
 void changeCameraPos(GLfloat*pos) {
@@ -124,8 +97,10 @@ void display(void) {
     //sets light position with camera
     glLightfv(GL_LIGHT0, GL_POSITION, light);
     
-    for (int i = 0; i < cubes.size(); i++)
-        cubes[i]->render();
+    //for (int i = 0; i < cubes.size(); i++)
+    //    cubes[i]->render();
+    world.render();
+    //foreach(element in scene) element.render();
 
     //temporarily render floor - not elegant but enough for now
     glBegin(GL_QUADS);
@@ -136,6 +111,7 @@ void display(void) {
     glEnd();
 
     glutSwapBuffers();
+    //glFlush();
 }
 
 void reshape(int width, int height) {
@@ -256,8 +232,8 @@ inline void open_gl_init() {
 
     //general settings
     glShadeModel(GL_SMOOTH);
-    glEnable(GL_COLOR_MATERIAL);
-    glEnable(GL_NORMALIZE);
+    //glEnable(GL_COLOR_MATERIAL);
+    //glEnable(GL_NORMALIZE);
 
     //light settings
     GLfloat light_diffuse[] = {1, 1, 1, 1};
@@ -273,7 +249,7 @@ inline void open_gl_init() {
     GLfloat light1_ambient[] = {0.2, 0.2, 0.2, 1.0};
     GLfloat light1_diffuse[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light1_specular[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat light1_position[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat light1_position[] = {3, 0.0, 0.0, 1.0};
     GLfloat spot_direction[] = {-1.0, -1.0, 0.0};
 
     glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
@@ -300,6 +276,9 @@ int y_mouse_pos = 0;
 
 void mouseFunction(int x, int y)
 {
+	x_mouse_pos = glutGet(GLUT_WINDOW_WIDTH)/2;
+	y_mouse_pos = glutGet(GLUT_WINDOW_HEIGHT)/2;
+	//if(x == glutGet(GLUT_WINDOW_WIDTH)/2 && y == glutGet(GLUT_WINDOW_HEIGHT)/2) return;
 	if(x_mouse_pos == 0 && y_mouse_pos == 0)
 		{ x_mouse_pos = x; y_mouse_pos = y; return; }
 	//there is changing x and y;
@@ -314,7 +293,10 @@ void mouseFunction(int x, int y)
 
 	//store old position
 	x_mouse_pos = x; y_mouse_pos = y;
+	//broken code
+	glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH)/2, glutGet(GLUT_WINDOW_HEIGHT)/2);
 
+	//glutPostRedisplay();
 	reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 }
 
@@ -339,6 +321,20 @@ int main(int argc, char** argv) {
     c->setStrategy(lrs);
 
     cubes.push_back(c);
+
+    Point p3(0, 0, 0);
+    CubeGL *c2;
+    c2 = new CubeGL(p2, 1);
+    c2->moveFigure(1,5,1);
+    c2->setStrategy(lrs);
+
+    CubeGL *c3;
+    c3 = new CubeGL(p2, 1);
+    c3->moveFigure(1,1,1);
+    c3->setStrategy(lrs);
+
+    world.addObject(c2);
+    world.addObject(c3);
 
     camera = initialize_camera();
     open_gl_init();

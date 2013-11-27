@@ -19,11 +19,11 @@ public:
         m_Emission = emission;
         m_Shininess = shininess;
         
-        float Ambient[] = {0.2, 0.2, 0.2, 1.0};
-        float Diffuse[] = {1, 1, 1, 1};
-        float Specular[] = {0.2, 0.2, 0.2, 1.0};
+        float Ambient[] = {0.1, 0.1, 0.1, 1.0};
+        float Diffuse[] = {0.5, 0.5, 0.5, 1};
+        float Specular[] = {0.4, 0.4, 0.4, 1.0};
         float Emission[] = {0.1, 0.1, 0.1, 1.0};
-        float Shininess = 0.1;
+        float Shininess = 0.9;
         
         m_Ambient = copyArray((float*)Ambient, 4);
         m_Diffuse = copyArray((float*)Diffuse, 4);
@@ -44,11 +44,11 @@ public:
     
     void Apply()
     {
-        glMaterialfv( GL_FRONT, GL_AMBIENT, m_Ambient );
-        glMaterialfv( GL_FRONT, GL_DIFFUSE, m_Diffuse);
-        glMaterialfv( GL_FRONT, GL_SPECULAR, m_Specular );
-        glMaterialfv( GL_FRONT, GL_EMISSION, m_Emission );
-        glMaterialf( GL_FRONT, GL_SHININESS, m_Shininess );
+        glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, m_Ambient );
+        glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, m_Diffuse);
+        glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, m_Specular );
+        glMaterialfv( GL_FRONT_AND_BACK, GL_EMISSION, m_Emission );
+        glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, m_Shininess );
     }
 protected:
     float* m_Ambient;

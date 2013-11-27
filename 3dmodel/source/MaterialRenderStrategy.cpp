@@ -70,37 +70,13 @@ void MaterialRenderStrategy::renderPolygon(vector<Point*>* polygon)
 {
     glPushMatrix();
     preObject();
-    glBegin(GL_QUADS);
-    counter = counter % 6;
-    int normal = normals.size();
-    
-    //glNormal3f(normal[0], normal[1], normal[2]);
-    switch(counter)
-    {
-        case 0:
-            glNormal3f(1,0,0);
-            break;
-        case 1:
-            glNormal3f(0,0,-1);
-            break;
-        case 2:
-            glNormal3f(0,-1,0);
-            break;
-        case 3:
-            glNormal3f(0,1,0);
-            break;
-        case 4:
-            glNormal3f(-1,0,0);
-            break;
-        case 5:
-            glNormal3f(1,0,0);
-            break;
-    }
+    glBegin(GL_POLYGON);
     counter++;
     for(int i = 0; i < polygon->size(); i++)
     {
         material->Apply();
-        glVertex3f((*polygon)[i]->x(), (*polygon)[i]->y(), (*polygon)[i]->z());
+        glNormal3f((*polygon)[i]->normal.x, (*polygon)[i]->normal.y, (*polygon)[i]->normal.z);
+        glVertex3f((*polygon)[i]->x, (*polygon)[i]->y, (*polygon)[i]->z);
     }
     glEnd();
     postObject();
