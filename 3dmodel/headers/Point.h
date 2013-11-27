@@ -1,27 +1,25 @@
 #ifndef POINT_H
 #define	POINT_H
 
-class Point {
-    double _x;
-    double _y;
-    double _z;
-public:
-    Point();
-    Point(double x, double y, double z);
-    
-    double x();
-    double y();
-    double z();
-    
-    void x(double x);
-    void y(double y);
-    void z(double z);
-    
-    Point(const Point& orig);
-    virtual ~Point();
-private:
+struct Point3D
+{
+	double x,y,z;
+	struct Normal {
+		double x,y,z;
+	} normal;
+	struct Texture
+	{
+		double x,y,z;
+	} texture;
 
-};
+	Point3D(float x, float y, float z)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
+}typedef Point;
+
 
 #endif	/* POINT_H */
 

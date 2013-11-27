@@ -13,7 +13,7 @@ public:
     CubeGL(Point**);
     CubeGL(Point p, double width);
     CubeGL(const CubeGL& orig);
-    void render();              //rendering object on scene
+    virtual void render();              //rendering object on scene
     void setStrategy(GLRenderStrategy *strategy) {this->strategy = strategy;}
     virtual ~CubeGL();
 protected:

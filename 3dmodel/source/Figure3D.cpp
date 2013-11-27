@@ -29,3 +29,9 @@ void Figure3D::cleanPolygons()
     polygons.clear();
 }
 
+void Figure3D::moveFigure(double x, double y, double z)
+{
+	pos_.x += x;
+	pos_.y += y;
+	pos_.z += z;
+}

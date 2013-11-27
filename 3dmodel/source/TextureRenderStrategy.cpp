@@ -67,7 +67,7 @@ void TextureRenderStrategy::renderPolygon(vector<Point*>* polygon)
    {
        Point *p = (*polygon)[i]; 
        glTexCoord2d(tex_points[i].first, tex_points[i].second);
-       glVertex3f(p->x(), p->y(), p->z());
+       glVertex3f(p->x, p->y, p->z);
    }
    glEnd();
    glDisable(GL_TEXTURE_2D);
