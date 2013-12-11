@@ -47,3 +47,12 @@ Camera* Scene::getCamera()
 	else
 		return NULL;
 }
+
+void Scene::removeObject(Figure3D* figure)
+{
+	int pos = 0;
+	for(unsigned int i=0; i < objects.size(); i++)
+		if (figure == objects[i])
+			pos = i;
+	objects.erase(objects.begin() + pos);
+}

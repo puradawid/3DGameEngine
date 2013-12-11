@@ -12,12 +12,12 @@ protected:
 	int current_camera;
 public:
 	Scene(); //default constructor
-	int addObject(Figure3D*);
-	void removeObject(Figure3D*);
-	Figure3D* getObject(int id);
-	void render();
-	int addCamera(Camera);
-	Camera* getCamera();
+	virtual int addObject(Figure3D*);
+	virtual void removeObject(Figure3D*);
+	virtual Figure3D* getObject(int id);
+	virtual void render();
+	virtual int addCamera(Camera);
+	virtual Camera* getCamera();
 };
 
 

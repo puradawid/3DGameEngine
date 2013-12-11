@@ -18,6 +18,19 @@ struct Point3D
 		this->y = y;
 		this->z = z;
 	}
+	Point3D()
+	{
+		this->x = 0;
+		this->y = 0;
+		this->z = 0;
+	}
+
+	void add(Point3D rel)
+	{
+		this->x = rel.x;
+		this->y = rel.y;
+		this->z = rel.z;
+	}
 }typedef Point;
 
 

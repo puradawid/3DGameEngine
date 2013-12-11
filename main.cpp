@@ -25,6 +25,11 @@
 #include "3dmodel/headers/TextureRenderStrategy.h"
 #include "3dmodel/headers/Camera.h"
 #include "3dmodel/headers/Scene.h"
+#include "3dmodel/headers/Material.h"
+#include "3dmodel/headers/TreeScene.h"
+#include "3dmodel/headers/TreeNode.h"
+#include "3dmodel/headers/Figure3DNode.h"
+#include "3dmodel/headers/OBJBuilder.h"
 
 using namespace std;
 
@@ -38,7 +43,7 @@ enum Perspective {
 
 static Perspective perspective;
 
-Scene world;
+TreeScene world;
 
 GLfloat* light;
 
@@ -103,6 +108,8 @@ void display(void) {
     //foreach(element in scene) element.render();
 
     //temporarily render floor - not elegant but enough for now
+    Material mat(0,0,0,0,0);
+    mat.Apply();
     glBegin(GL_QUADS);
     	glVertex3f(-1000.0, -0.5, 1000.0);
     	glVertex3f(1000.0, -0.5, 1000.0);
@@ -262,7 +269,7 @@ inline void open_gl_init() {
 
     glEnable(GL_LIGHT1);
 
-    trs->init();
+    //trs->init();
     perspective = PERSPECTIVE;
 }
 
@@ -296,14 +303,30 @@ void mouseFunction(int x, int y)
 	reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 }
 
+void generateKloc(float x, float y, float z)
+{
+	Point p(0, 0, 0);
+	CubeGL *c2;
+	c2 = new CubeGL(p, 1);
+	c2->moveFigure(x,y,z);
+	c2->setStrategy(mrs);
+	TreeNode *t = new Figure3DNode(dynamic_cast<Figure3D*>(c2), Point(x,y,z));
+	world.getRoot()->addChild(t);
+}
+
 
 int main(int argc, char** argv) {
-    glut_init(&argc, argv); //initialize first GLUT window
+	OBJBuilder builder("M4A1.obj");
+	Figure3D* rocket = builder.build();
+
+	glut_init(&argc, argv); //initialize first GLUT window
+
+    //builder.build();
 
     //init strategies
     lrs = new LinesRenderStrategy(0.1, 0.1, 0.1);
     mrs = new MaterialRenderStrategy(0.1, 0.5, 0.1);
-    trs = new TextureRenderStrategy();
+    //trs = new TextureRenderStrategy();
 
     light = new GLfloat[4];
     light[0] = 1.0;
@@ -311,26 +334,10 @@ int main(int argc, char** argv) {
     light[2] = 1.0;
     light[3] = 1;
 
-    Point p2(-0.5, 0, -5);
-    CubeGL *c;
-    c = new CubeGL(p2, 1);
-    c->setStrategy(lrs);
-
-    cubes.push_back(c);
-
-    Point p3(0, 0, 0);
-    CubeGL *c2;
-    c2 = new CubeGL(p2, 1);
-    c2->moveFigure(1,5,1);
-    c2->setStrategy(lrs);
-
-    CubeGL *c3;
-    c3 = new CubeGL(p2, 1);
-    c3->moveFigure(1,1,1);
-    c3->setStrategy(lrs);
-
-    world.addObject(c2);
-    world.addObject(c3);
+    //for(int i = 0; i < 100; i++)
+    //	generateKloc(i,i,i);
+    rocket->setRenderStrategy(lrs);
+    world.getRoot()->addChild(new Figure3DNode(rocket, Point(0,0,0)));
 
     camera = initialize_camera();
     open_gl_init();
