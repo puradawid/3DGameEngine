@@ -10,6 +10,7 @@ protected:
 	Figure3D * object;
 public:
 	Figure3DNode(Figure3D*, Point relative);
+	Figure3DNode(Figure3D*);
 
 	void runRender();
 };
