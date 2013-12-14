@@ -30,6 +30,7 @@
 #include "3dmodel/headers/TreeNode.h"
 #include "3dmodel/headers/Figure3DNode.h"
 #include "3dmodel/headers/OBJBuilder.h"
+#include "3dmodel/headers/XMLSceneBuilder.h"
 
 using namespace std;
 
@@ -43,7 +44,7 @@ enum Perspective {
 
 static Perspective perspective;
 
-TreeScene world;
+TreeScene* world;
 
 GLfloat* light;
 
@@ -104,7 +105,7 @@ void display(void) {
     
     //for (int i = 0; i < cubes.size(); i++)
     //    cubes[i]->render();
-    world.render();
+    world->render();
     //foreach(element in scene) element.render();
 
     //temporarily render floor - not elegant but enough for now
@@ -129,7 +130,7 @@ void reshape(int width, int height) {
     glLoadIdentity();
 
     if (perspective == PERSPECTIVE)
-        gluPerspective(60, (GLfloat) width / (GLfloat) height, 1.0, 10.0);
+        gluPerspective(60, (GLfloat) width / (GLfloat) height, 1.0, 100.0);
     else
         glOrtho(0, width, 0, height, 0, 10); //it is not working ?
     display();
@@ -311,12 +312,16 @@ void generateKloc(float x, float y, float z)
 	c2->moveFigure(x,y,z);
 	c2->setStrategy(mrs);
 	TreeNode *t = new Figure3DNode(dynamic_cast<Figure3D*>(c2), Point(x,y,z));
-	world.getRoot()->addChild(t);
+	world->getRoot()->addChild(t);
 }
 
 
 int main(int argc, char** argv) {
-	OBJBuilder builder("M4A1.obj");
+	OBJBuilder builder("resources/obj/rocket.obj");
+	XMLSceneBuilder xsb("resources/scene.xml");
+	world = dynamic_cast<TreeScene*>(xsb.buildScene());
+	//world = new TreeScene();
+
 	Figure3D* rocket = builder.build();
 
 	glut_init(&argc, argv); //initialize first GLUT window
@@ -336,8 +341,8 @@ int main(int argc, char** argv) {
 
     //for(int i = 0; i < 100; i++)
     //	generateKloc(i,i,i);
-    rocket->setRenderStrategy(lrs);
-    world.getRoot()->addChild(new Figure3DNode(rocket, Point(0,0,0)));
+    rocket->setRenderStrategy(mrs);
+    //world->getRoot()->addChild(new Figure3DNode(rocket, Point(0,0,0)));
 
     camera = initialize_camera();
     open_gl_init();
