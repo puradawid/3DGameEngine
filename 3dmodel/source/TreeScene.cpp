@@ -21,4 +21,7 @@ void TreeScene::render()
 	this->root->render();
 }
 
-
+void TreeScene::setRoot(TreeNode* root)
+{
+	this->root = root;
+}
