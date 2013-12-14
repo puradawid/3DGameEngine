@@ -5,6 +5,9 @@
 TreeNode::TreeNode()
 {
 	this->id = 10;
+	scale.x = 1;
+	scale.y = 1;
+	scale.z = 1;
 }
 
 void TreeNode::addChild(TreeNode *child)
@@ -19,6 +22,7 @@ void TreeNode::render()
 	glRotatef(rotate.x, 1, 0, 0);
 	glRotatef(rotate.y, 0, 1, 0);
 	glRotatef(rotate.z, 0, 0, 1);
+	glScalef(scale.x,scale.y,scale.z);
 	glTranslatef(relative.x, relative.y, relative.z);
 
 	runRender();

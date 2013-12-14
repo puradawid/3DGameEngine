@@ -13,6 +13,7 @@ protected:
 	TreeNode* parent;
 	Point relative;
 	Point rotate;
+	Point scale;
 public:
 	TreeNode();
 	virtual void render();
