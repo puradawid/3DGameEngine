@@ -2,6 +2,7 @@
 #define SCENENODE_H
 
 #include "ObjectId.h"
+#include "UpdateClues.h"
 
 class SceneNode
 {

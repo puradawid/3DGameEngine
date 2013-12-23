@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include "RenderClues.h"
+#include "Camera.h"
 #include "SceneIterator.h"
 
 class Scene

@@ -1,13 +1,22 @@
 #ifndef OBJPOOL_H
 #define OBJPOOL_H
 
-#define OBJPoolMeshes std::vector<std::pair<string, std::vector<std::vector<Point>*>*> >
+#include <vector>
+#include <string>
+#include <utility>
+
+#include "Point.h"
+#include "Mesh.h"
+#include "MeshBuildStrategy.h"
+
+//#define OBJPoolMeshes std::vector<std::pair<std::string, std::vector<std::vector<Point>*>*> >
 
 class OBJPool
 {
-	OBJPoolMeshes meshes;
+private:
+	std::vector<std::pair<std::string, std::vector<std::vector<Point>*>*> > meshes;
 public:
-	getMesh(MeshBuildStrategy*, string); //strategy and resource path
+	Mesh* getMesh(MeshBuildStrategy*, std::string); //strategy and resource path
 };
 
 #endif

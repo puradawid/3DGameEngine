@@ -1,5 +1,24 @@
 #ifndef GAME_H
 #define GAME_H
+
+#include "OBJPool.h"
+#include "UserEventManager.h"
+#include "CollisionDetector.h"
+#include "GameConfig.h"
+#include "TimerClock.h"
+#include "Mesh.h"
+#include "Collision.h"
+#include "Scene.h"
+#include "Camera.h"
+
+
+//implementation
+ void display();
+ void reshape(int, int);
+ void keyboard_event(unsigned char, int, int);
+ void keyboard_special_event(int, int, int);
+ void mouse_function(int, int);
+
 /**
  * Game class
  *
@@ -9,14 +28,27 @@
 
  class Game
  {
+ //friends declatarion
+ friend void display();
+ friend void reshape(int, int);
+ friend void keyboard_event(unsigned char, int, int);
+ friend void keyboard_special_event(int, int, int);
+ friend void mouse_function(int);
+
  private:
-    //there will be all field what we dont want to leave alone
-    //from UML
     Scene* scene;
     TimerClock* timerClock;
-    OBJFactory* objFactory;
+    OBJPool* objPool;
     CollisionDetector* collisionDetecotr;
-    UserEventMenager* userEventMenager;
+    UserEventManager* userEventMenager;
+    GameConfig* config;
+
+    static Game* singleton;
+
+    //private methods for GL communication
+    void startLoop();
+    void prepareInstance(GameConfig*);
+
  protected:
     virtual void initializeGame(GameConfig* config) = 0; /// You really need to override this method - without it, it is useless
  public:
@@ -24,13 +56,12 @@
     void stop();  ///Kill game - stop all displaing and unload resources - exit out
 
     //Getters and setters - for being more accessible
-    static Game* getGameInstance();
+    static Game* getGameInstance() {return singleton;}
     Scene* getScene();
     TimerClock getTimerClock();
-    OBJFactory getOBJFactory();
+    OBJPool getOBJPool();
     CollisionDetector* getCollisionDetector();
     UserEventManager* getUserEventManager();
-
  };
 
  #endif

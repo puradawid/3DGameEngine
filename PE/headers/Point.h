@@ -31,7 +31,7 @@ struct Point3D
 		this->y = rel.y;
 		this->z = rel.z;
 	}
-}typedef Point;
+} typedef Point;
 
 
 #endif	/* POINT_H */

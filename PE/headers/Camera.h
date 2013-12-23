@@ -2,6 +2,8 @@
 #define CAMERA_H
 
 #include "CameraState.h"
+#include "SceneNode.h"
+#include "UpdateClues.h"
 
 /** Camera
  * Camera is an element of scene which is caterogically not renderable
@@ -14,6 +16,7 @@ private:
 	CameraState currentState; //current state of camera (structure)
 public:
 	virtual void update(UpdateClues*);
+	virtual ~Camera();
 };
 
 #endif
