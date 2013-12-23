@@ -1,3 +1,4 @@
+#ifdef PROBLEM
 #include <cstdlib>
 #include <iostream>
 #include <math.h>
@@ -121,7 +122,6 @@ void display(void) {
     glutSwapBuffers();
     //glFlush();
 }
-
 void reshape(int width, int height) {
     glViewport(0, 0, width, height);
 
@@ -359,8 +359,7 @@ int main(int argc, char** argv) {
         delete cubes[i];
     return 0;
 }
-
-
+#endif
 
 /**
  * Here ends legacy code - it is not neccessary to hide, but you need
@@ -369,12 +368,69 @@ int main(int argc, char** argv) {
  * new.
  */
 
+#include <GL/gl.h>
+#include <GL/glext.h>
+#include <GL/glu.h>
+
+#ifdef WIN32
+	#include <GL/glut.h>
+#else
+	#include <GL/freeglut.h>
+#endif
+
 #include "../headers/Game.h"
 
  void Game::start()
  {
     GameConfig* config = new TypicalConfig(); //TypicalConfig - internal class for simple configure (without parsing)
-    this->prepareInstance(gameConfig); //prepare instance of system - make some fields, load data, etc
-    this->initializeGame(gameConfig); //ok - what user want to do? Answer.
+    this->prepareInstance(dynamic_cast<GameConfig*>(config)); //prepare instance of system - make some fields, load data, etc
+    this->initializeGame(dynamic_cast<GameConfig*>(config)); //ok - what user want to do? Answer.
     this->startLoop(); //jumping to loop - without any window :)
  }
+
+ void Game::prepareInstance(GameConfig* gameConfig)
+ {
+
+ }
+ 
+ 
+
+ void Game::startLoop()
+ {
+    glutInitWindowSize(this->config->getIntAttribute("h_resolotion"),
+    	               this->config->getIntAttribute("v_resolotion"));
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
+    glutCreateWindow(const_cast<const char*>(this->config->getAttribute("window_name").c_str()));
+    glutSetCursor(GLUT_CURSOR_NONE);
+
+ 	glutDisplayFunc(display);
+    glutReshapeFunc(reshape);
+    glutKeyboardFunc(keyboard_event);
+    glutSpecialFunc(keyboard_special_event);
+    glutPassiveMotionFunc(mouse_function);
+
+    //provide control for GLUT
+    glutMainLoop();
+}
+
+void display()
+{
+	//here rendering
+}
+
+void mouse_function(int x, int y)
+{
+	//push mouse event
+}
+
+void reshape(int x, int y)
+{
+	//reshape when something is wrong
+}
+
+void keyboard_event(unsigned char key, int x, int y)
+{
+	//here is event from keyboard
+}
+
+
