@@ -1,0 +1,8 @@
+#this is Makefile for PenetrationEngine code
+
+CC=g++
+OPTS=-pg
+LIBS=-lopengl32 -lglu32 -lglut32 -Llib
+
+compile:
+	$(CC) $(OPTS) PE/src/*.cpp PE/client.cpp -o Debug/PE.exe $(LIBS)
