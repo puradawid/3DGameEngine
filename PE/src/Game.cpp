@@ -433,4 +433,12 @@ void keyboard_event(unsigned char key, int x, int y)
 	//here is event from keyboard
 }
 
+void keyboard_special_event(int event, int x, int y)
+{
 
+}
+
+void Game::stop()
+{
+	//need to be implemented like others ;)
+}
