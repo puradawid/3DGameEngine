@@ -382,9 +382,8 @@ int main(int argc, char** argv) {
 
  void Game::start()
  {
-    GameConfig* config = new TypicalConfig(); //TypicalConfig - internal class for simple configure (without parsing)
-    this->prepareInstance(dynamic_cast<GameConfig*>(config)); //prepare instance of system - make some fields, load data, etc
-    this->initializeGame(dynamic_cast<GameConfig*>(config)); //ok - what user want to do? Answer.
+    this->prepareInstance(config); //prepare instance of system - make some fields, load data, etc
+    this->initializeGame(config); //ok - what user want to do? Answer.
     this->startLoop(); //jumping to loop - without any window :)
  }
 
@@ -441,4 +440,18 @@ void keyboard_special_event(int event, int x, int y)
 void Game::stop()
 {
 	//need to be implemented like others ;)
+}
+
+Game::Game()
+{
+    config = dynamic_cast<GameConfig*>(new TypicalConfig());
+}
+
+Game::~Game()
+{
+    delete this->config;
+}
+
+Game* Game::getGameInstance()
+{
 }
