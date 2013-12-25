@@ -1,7 +1,7 @@
 #this is Makefile for PenetrationEngine code
 
 CC=g++
-OPTS=-pg
+OPTS=-pg -ggdb
 LIBS=-lopengl32 -lglu32 -lglut32 -Llib
 
 compile:
