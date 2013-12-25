@@ -396,8 +396,8 @@ int main(int argc, char** argv) {
 
  void Game::startLoop()
  {
-    glutInitWindowSize(this->config->getIntAttribute("h_resolotion"),
-    	               this->config->getIntAttribute("v_resolotion"));
+    glutInitWindowSize(this->config->getIntAttribute("h_resolution"),
+    	               this->config->getIntAttribute("v_resolution"));
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     glutCreateWindow(const_cast<const char*>(this->config->getAttribute("window_name").c_str()));
     glutSetCursor(GLUT_CURSOR_NONE);
@@ -415,6 +415,24 @@ int main(int argc, char** argv) {
 void display()
 {
 	//here rendering
+    // Clear frame buffer and depth buffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glClearColor(0, 0, 0, 0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    //drawing
+
+    glBegin(GL_QUADS);
+        glVertex3f(-1000.0, -0.5, 1000.0);
+        glVertex3f(1000.0, -0.5, 1000.0);
+        glVertex3f(1000.0, -0.5, -1000.0);
+        glVertex3f(-1000.0, -0.5, -1000.0);
+    glEnd();
+
+    glutSwapBuffers();
+    //glFlush();
 }
 
 void mouse_function(int x, int y)
@@ -422,9 +440,16 @@ void mouse_function(int x, int y)
 	//push mouse event
 }
 
-void reshape(int x, int y)
+void reshape(int width, int height)
 {
 	//reshape when something is wrong
+    glViewport(0, 0, width, height);
+
+    glMatrixMode(GL_PROJECTION);
+
+    glLoadIdentity();
+
+    gluPerspective(60, (GLfloat) width / (GLfloat) height, 1.0, 100.0);
 }
 
 void keyboard_event(unsigned char key, int x, int y)
@@ -450,8 +475,4 @@ Game::Game()
 Game::~Game()
 {
     delete this->config;
-}
-
-Game* Game::getGameInstance()
-{
 }
