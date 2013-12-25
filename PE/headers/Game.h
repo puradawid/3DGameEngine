@@ -39,8 +39,8 @@
     Scene* scene;
     TimerClock* timerClock;
     OBJPool* objPool;
-    CollisionDetector* collisionDetecotr;
-    UserEventManager* userEventMenager;
+    CollisionDetector* collisionDetector;
+    UserEventManager* userEventManager;
     GameConfig* config;
 
     static Game* singleton;
@@ -51,17 +51,19 @@
 
  protected:
     virtual void initializeGame(GameConfig* config) = 0; /// You really need to override this method - without it, it is useless
+    Game();
+    virtual ~Game();
  public:
     void start(); ///Runs game by triggering this here. It is unoverrideable
     void stop();  ///Kill game - stop all displaing and unload resources - exit out
 
     //Getters and setters - for being more accessible
-    static Game* getGameInstance() {return singleton;}
-    Scene* getScene();
-    TimerClock getTimerClock();
-    OBJPool getOBJPool();
-    CollisionDetector* getCollisionDetector();
-    UserEventManager* getUserEventManager();
+    static Game* getGameInstance() 				{return singleton;}
+    Scene* getScene() 							{return scene;}
+    TimerClock* getTimerClock()					{return timerClock;}
+    OBJPool* getOBJPool()						{return objPool;}
+    CollisionDetector* getCollisionDetector()	{return collisionDetector;}
+    UserEventManager* getUserEventManager()		{return userEventManager;}
  };
 
- #endif
+#endif
