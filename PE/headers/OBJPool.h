@@ -9,14 +9,17 @@
 #include "Mesh.h"
 #include "MeshBuildStrategy.h"
 
-//#define OBJPoolMeshes std::vector<std::pair<std::string, std::vector<std::vector<Point>*>*> >
+#define OBJMesh std::vector<std::vector<Point>*>*
+#define OBJPoolMeshes std::vector<std::pair<std::string, OBJMesh> >
 
 class OBJPool
 {
 private:
-	std::vector<std::pair<std::string, std::vector<std::vector<Point>*>*> > meshes;
+	OBJPoolMeshes meshes;
+	OBJMesh parseOBJ(std::string);
 public:
 	Mesh* getMesh(MeshBuildStrategy*, std::string); //strategy and resource path
+	virtual ~OBJPool();
 };
 
 #endif
