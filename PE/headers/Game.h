@@ -18,6 +18,7 @@
  void keyboard_event(unsigned char, int, int);
  void keyboard_special_event(int, int, int);
  void mouse_function(int, int);
+ void msTick(int);
 
 /**
  * Game class
@@ -34,6 +35,8 @@
  friend void keyboard_event(unsigned char, int, int);
  friend void keyboard_special_event(int, int, int);
  friend void mouse_function(int);
+ friend void msTick();
+
 
  private:
     Scene* scene;

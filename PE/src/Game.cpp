@@ -371,14 +371,19 @@ int main(int argc, char** argv) {
 #include <GL/gl.h>
 #include <GL/glext.h>
 #include <GL/glu.h>
+#include <stdio.h>
 
-#ifdef WIN32
+#ifdef __MINGW32__
 	#include <GL/glut.h>
 #else
 	#include <GL/freeglut.h>
 #endif
 
 #include "../headers/Game.h"
+#include "../headers/TimerClock.h"
+
+ //it is awful but..
+ Game* Game::singleton = 0x0; //initialization of singleton expression
 
  void Game::start()
  {
@@ -391,8 +396,20 @@ int main(int argc, char** argv) {
  {
 
  }
- 
- 
+
+int timestamp;  
+void msTick()
+{
+    int time_lefted = glutGet(GLUT_ELAPSED_TIME) - timestamp; //in ms
+    timestamp = glutGet(GLUT_ELAPSED_TIME);
+    Game::getGameInstance()->getTimerClock()->inform(time_lefted);
+}
+
+void tick()
+{
+    msTick();
+    glutPostRedisplay();
+}
 
  void Game::startLoop()
  {
@@ -407,8 +424,10 @@ int main(int argc, char** argv) {
     glutKeyboardFunc(keyboard_event);
     glutSpecialFunc(keyboard_special_event);
     glutPassiveMotionFunc(mouse_function);
+    glutIdleFunc(tick);
 
     //provide control for GLUT
+    timestamp = glutGet(GLUT_ELAPSED_TIME);
     glutMainLoop();
 }
 
@@ -432,7 +451,6 @@ void display()
     glEnd();
 
     glutSwapBuffers();
-    //glFlush();
 }
 
 void mouse_function(int x, int y)
@@ -470,6 +488,8 @@ void Game::stop()
 Game::Game()
 {
     config = dynamic_cast<GameConfig*>(new TypicalConfig());
+    timerClock = new TimerClock();
+    singleton = this;
 }
 
 Game::~Game()
