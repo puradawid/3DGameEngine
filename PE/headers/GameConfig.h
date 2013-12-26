@@ -37,7 +37,7 @@ public:
 	{
 		config.push_back(std::pair<std::string, std::string>("h_resolution", "800"));
 		config.push_back(std::pair<std::string, std::string>("v_resolution", "600"));
-		config.push_back(std::pair<std::string, std::string>("window_name", "Powered by PenetrationEngine"));
+		config.push_back(std::pair<std::string, std::string>("window_name", "Powered by PenetrationEngine - Pura&Rewucki Development"));
 	}
 };
 
