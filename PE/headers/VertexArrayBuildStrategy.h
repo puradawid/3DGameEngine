@@ -1,10 +1,17 @@
 #ifndef VERTEXARRAYBUILDSTRATEGY_H
 #define VERTEXARRAYBUILDSTRATEGY_H
 
-class VertexArrayBuildStrategy : MeshBuildStrategy
+#include "Mesh.h"
+#include "Point.h"
+#include "MeshBuildStrategy.h"
+
+#include <vector>
+
+class VertexArrayBuildStrategy : public MeshBuildStrategy
 {
 public:
-	virtual Mesh* getMesh(std::vector<std::vector<Point*>*>);
+	VertexArrayBuildStrategy();
+	virtual Mesh* getMesh(std::vector<std::vector<Point>*>*);
 };
 
 #endif
