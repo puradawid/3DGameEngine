@@ -10,8 +10,10 @@ class Scene
 	SceneNode* root;
 	Camera* mainCamera;
 public:
+	Scene();
 	void render(RenderClues*);
 	void update(UpdateClues*);
+	SceneNode* getRoot();
 	SceneIterator* getIterator();
 };
 
