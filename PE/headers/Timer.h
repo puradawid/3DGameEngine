@@ -5,10 +5,14 @@
 
 class Timer
 {
+	friend class TimerClock;
+
 	GLint interval;
 	GLint ticks;
+	GLint left;
 public:
-	virtual void tick();
+	Timer(int, int);
+	virtual void tick() {};
 };
 
 #endif
