@@ -400,9 +400,9 @@ int main(int argc, char** argv) {
 int timestamp;  
 void msTick()
 {
-    int time_lefted = glutGet(GLUT_ELAPSED_TIME) - timestamp; //in ms
+    int time_left = glutGet(GLUT_ELAPSED_TIME) - timestamp; //in ms
     timestamp = glutGet(GLUT_ELAPSED_TIME);
-    Game::getGameInstance()->getTimerClock()->inform(time_lefted);
+    Game::getGameInstance()->getTimerClock()->inform(time_left);
 }
 
 void tick()
@@ -442,6 +442,10 @@ void display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     //drawing
+
+    RenderClues* rc = new RenderClues();
+    Game::getGameInstance()->scene->render(rc);
+    delete rc;
 
     glBegin(GL_QUADS);
         glVertex3f(-1000.0, -0.5, 1000.0);
@@ -489,6 +493,8 @@ Game::Game()
 {
     config = dynamic_cast<GameConfig*>(new TypicalConfig());
     timerClock = new TimerClock();
+    scene = new Scene();
+    objPool = new OBJPool();
     singleton = this;
 }
 
