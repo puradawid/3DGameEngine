@@ -3,10 +3,14 @@
 
 #include "HUD.h"
 
+#include <GL\gl.h>
+#include <string>
+#include <vector>
+
 struct TextPlaces
 {
 	GLdouble x,y;
-	string text;
+	std::string text;
 } typedef TextPlaces;
 
 class TextHUD : public HUD

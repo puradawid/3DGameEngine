@@ -1,7 +1,7 @@
 #ifndef PECOMMAND_H
 #define PECOMMAND_H
 
-class PECommnad
+class PECommand
 {
 	virtual void doCommand() = 0;
 };

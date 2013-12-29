@@ -2,6 +2,8 @@
 #define GAMEOBJECT_H
 
 #include "RenderClues.h"
+#include "Mesh.h"
+#include "SceneNode.h"
 
 class GameObject : public SceneNode
 {
