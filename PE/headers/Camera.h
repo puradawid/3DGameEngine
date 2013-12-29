@@ -5,6 +5,11 @@
 #include "SceneNode.h"
 #include "UpdateClues.h"
 
+#ifdef _MSC_VER
+	#define _USE_MATH_DEFINES
+	#include <cmath>
+#endif
+
 /** Camera
  * Camera is an element of scene which is caterogically not renderable
  * but it can transform by itself or other nodes. (parents or childs).
