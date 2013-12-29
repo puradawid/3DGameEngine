@@ -6,11 +6,12 @@
 #include "ObjectId.h"
 #include "UpdateClues.h"
 #include "RenderClues.h"
-
+#include "SimplePoint.h"
 class SceneNode
 {
 	static int counter;
 	std::vector<SceneNode*> childs;
+	SimplePoint rotation, translation, scale;
 	ObjectId id;
 public:
 	ObjectId addNode(SceneNode*);
