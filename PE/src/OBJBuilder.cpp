@@ -4,6 +4,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#ifdef _MSC_VER
+#include <Windows.h>
+#endif
 #include <GL/gl.h>
 #include <stdio.h>
 #include <stdlib.h>

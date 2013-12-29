@@ -1,6 +1,8 @@
 #ifndef USEREVENTMANAGER_H
 #define USEREVENTMANAGER_H
-
+#ifdef _MSC_VER
+#include <Windows.h>
+#endif
 #include <GL/gl.h>
 
 class UserEventManager

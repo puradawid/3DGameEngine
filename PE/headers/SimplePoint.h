@@ -1,6 +1,8 @@
 #ifndef SIMPLEPOINT_H
 #define SIMPLEPOINT_H
-
+#ifdef _MSC_VER
+#include <Windows.h>
+#endif
 #include <Gl/gl.h>
 
 struct SimplePoint
