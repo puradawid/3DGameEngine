@@ -13,6 +13,13 @@ struct SimplePoint
 		this->y = y;
 		this->z = z;
 	}
+
+	SimplePoint()
+	{
+		this->x = 0.0;
+		this->y = 0.0;
+		this->z = 0.0;
+	}
 } typedef SimplePoint;
 
 #endif
