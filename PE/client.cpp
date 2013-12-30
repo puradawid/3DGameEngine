@@ -8,6 +8,8 @@
 
 #include <stdio.h>
 
+SceneNode* rocket;
+
 class MyTimer : public Timer
 {
 public:
@@ -20,6 +22,7 @@ public:
 	virtual void tick()
 	{
 		printf("tick!\n");
+		rocket->move(SimplePoint(0,0,-0.1));
 	}
 };
 
@@ -34,6 +37,7 @@ public:
 		StaticObject* sn = new StaticObject(this->getOBJPool()->getMesh(mbs, "./resources/obj/rocket.obj"));
 		sn->setRenderStrategy(dynamic_cast<RenderStrategy*>(new MaterialRenderStrategy()));
 		this->getScene()->getRoot()->addNode(sn);
+		rocket = dynamic_cast<SceneNode*>(sn);
 	}
 };
 int main()
