@@ -1,9 +1,11 @@
 #include "../headers/LineRenderStrategy.h"
 
-void LineRenderStrategy::prepare(RenderClues* renderClues){
+#include <Gl/gl.h>
 
+void LineRenderStrategy::prepare(RenderClues* renderClues){
+	glBegin(GL_LINES);
 }
 
-void LineRenderStrategy::close(){
-
+void LineRenderStrategy::end(){
+	glEnd();
 }
