@@ -5,6 +5,7 @@
 
 class RenderStrategy
 {
+public:
 	virtual void prepare(RenderClues*) = 0;
 	virtual void end() = 0;
 };
