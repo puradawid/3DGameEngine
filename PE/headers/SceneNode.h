@@ -11,15 +11,19 @@
 class SceneNode
 {
 	static int counter;
-	std::vector<SceneNode*> childs;
 	SimplePoint rotation, translation, scale;
 	ObjectId id;
 protected:
 	RenderStrategy* rs;
+	std::vector<SceneNode*> childs;
+	void transform();
+	void revertTransform();
 public:
 	ObjectId addNode(SceneNode*);
 	void removeNode(ObjectId);
 	void setRenderStrategy(RenderStrategy*);
+	void move(SimplePoint vector);
+	SceneNode();
 
 	virtual void render(RenderClues*);
 	virtual void update(UpdateClues*);
