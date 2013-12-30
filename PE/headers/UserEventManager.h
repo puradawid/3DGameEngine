@@ -4,13 +4,17 @@
 #include <Windows.h>
 #endif
 #include <GL/gl.h>
-
+#include "UserEventObserver.h"
+#include <vector>
 class UserEventManager
 {
 	friend class Game;
+	std::vector<UserEventObserver*> observers;
 public:
-	void handleKeyboard(char k);
-	//TODO: handle other interrupts
+	UserEventManager();
+	void addObserver(UserEventObserver*);
+	void dismissObserver(UserEventObserver*);
+	void notifyObservers(UserEventArgs*);
 };
 
 #endif

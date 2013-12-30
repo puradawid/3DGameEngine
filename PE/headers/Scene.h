@@ -9,6 +9,7 @@ class Scene
 {
 	SceneNode* root;
 	Camera* mainCamera;
+
 public:
 	Scene();
 	void render(RenderClues*);
