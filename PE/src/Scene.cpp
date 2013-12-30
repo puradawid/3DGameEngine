@@ -28,3 +28,7 @@ SceneNode* Scene::getRoot()
 {
 	return root;
 }
+
+void Scene::setRoot(SceneNode* root){
+
+}

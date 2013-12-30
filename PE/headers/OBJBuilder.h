@@ -3,6 +3,9 @@
 #define OBJBUILDER_H
 
 #include <vector>
+#ifdef _MSC_VER
+#include <Windows.h>
+#endif
 #include <GL/gl.h>
 
 #include "../headers/Point.h"

@@ -4,6 +4,9 @@
 #include <math.h>
 
 //OpenGL for windows
+#ifdef _MSC_VER
+#include <Windows.h>
+#endif
 #ifdef _WIN32
 	#include <GL/gl.h>
 	#include <GL/glu.h>
@@ -367,9 +370,10 @@ int main(int argc, char** argv) {
  * even you just scroll down code - maybe you will discover something
  * new.
  */
-
+#ifdef _MSC_VER
+#include <Windows.h>
+#endif
 #include <GL/gl.h>
-#include <GL/glext.h>
 #include <GL/glu.h>
 #include <stdio.h>
 
