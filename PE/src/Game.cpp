@@ -374,7 +374,6 @@ int main(int argc, char** argv) {
 #include <Windows.h>
 #endif
 #include <GL/gl.h>
-#include <GL/glext.h>
 #include <GL/glu.h>
 #include <stdio.h>
 

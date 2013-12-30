@@ -13,6 +13,7 @@ public:
 	Scene();
 	void render(RenderClues*);
 	void update(UpdateClues*);
+	void setRoot(SceneNode*);
 	SceneNode* getRoot();
 	SceneIterator* getIterator();
 };

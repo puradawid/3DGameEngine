@@ -1,6 +1,8 @@
 #ifndef OBJECTID_H
 #define OBJECTID_H
-
+#ifdef _MSC_VER
+#include <Windows.h>
+#endif
 #include <Gl\gl.h>
 
 struct ObjectId

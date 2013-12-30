@@ -10,6 +10,7 @@ class CollisionDetector
 {
 	std::vector<CollisionObserver*> observers;
 public:
+	CollisionDetector();
 	void addObserver(CollisionObserver*);
 	void dismissObserver(CollisionObserver*);
 	void notifyObservers(Collision*);
