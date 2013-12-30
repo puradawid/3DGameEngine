@@ -2,12 +2,13 @@
 #define MATERIALRENDERSTRATEGY_H
 
 #include "RenderClues.h"
+#include "RenderStrategy.h"
 
-class MaterialRenderStrategy
+class MaterialRenderStrategy : public RenderStrategy
 {
 public:
 	virtual void prepare(RenderClues*);
-	virtual void close();
+	virtual void end();
 };
 
 #endif
