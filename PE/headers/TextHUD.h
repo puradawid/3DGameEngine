@@ -2,7 +2,9 @@
 #define TEXTHUD_H
 
 #include "HUD.h"
-
+#ifdef _MSC_VER
+#include <Windows.h>
+#endif
 #include <GL\gl.h>
 #include <string>
 #include <vector>

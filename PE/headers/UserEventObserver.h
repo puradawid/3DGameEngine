@@ -6,8 +6,7 @@
 class UserEventObserver
 {
 public: 
-	virtual void handleMouse(UserEventArgs*);
-	virtual void handleKeyboard(UserEventArgs*);
+	virtual void handleEvent(UserEventArgs*);
 };
 
 #endif

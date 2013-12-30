@@ -1,6 +1,8 @@
 #include "../headers/VertexArrayMesh.h"
 
-
+#ifdef _MSC_VER
+#include <Windows.h>
+#endif
 #include <GL/gl.h>
 
 VertexArrayMesh::VertexArrayMesh()
