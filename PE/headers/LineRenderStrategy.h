@@ -2,12 +2,13 @@
 #define LINERENDERSTRATEGY_H
 
 #include "RenderClues.h"
+#include "RenderStrategy.h"
 
-class LineRenderStrategy
+class LineRenderStrategy : public RenderStrategy
 {
 public:
 	virtual void prepare(RenderClues*);
-	virtual void close();
+	virtual void end();
 };
 
 #endif

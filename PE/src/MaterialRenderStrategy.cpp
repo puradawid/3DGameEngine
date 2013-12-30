@@ -1,9 +1,11 @@
 #include "../headers/MaterialRenderStrategy.h"
 
-void MaterialRenderStrategy::prepare(RenderClues* renderClues){
+#include <GL/gl.h>
 
+void MaterialRenderStrategy::prepare(RenderClues* renderClues){
+	glBegin(GL_TRIANGLES);
 }
 
-void MaterialRenderStrategy::close(){
-
+void MaterialRenderStrategy::end(){
+	glEnd();
 }

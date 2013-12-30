@@ -24,3 +24,8 @@ void SceneNode::update(UpdateClues* uc)
 {
 
 }
+
+void SceneNode::setRenderStrategy(RenderStrategy* rs)
+{
+	this->rs = rs;
+}
