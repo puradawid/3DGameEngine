@@ -4,6 +4,7 @@
 #endif
 #include "../headers/SimplePoint.h"
 #include <GL\gl.h>
+#include <stdlib.h>
 
 ObjectId SceneNode::addNode(SceneNode* child)
 {
@@ -29,7 +30,10 @@ void SceneNode::render(RenderClues* rc)
 
 void SceneNode::update(UpdateClues* uc)
 {
-
+	for(auto node : childs)
+	{
+		node->update(uc);
+	}
 }
 
 void SceneNode::setRenderStrategy(RenderStrategy* rs)
@@ -59,7 +63,6 @@ SceneNode::SceneNode()
 
 void SceneNode::move(SimplePoint vector)
 {
-	translation.x += vector.x;
-	translation.y += vector.y;
-	translation.z += vector.z;
+	translation = translation + vector;
+	update(NULL);
 }
