@@ -1,9 +1,12 @@
 #ifndef UPDATECLUES_H
 #define UPDATECLUES_H
 
+#include "SimplePoint.h"
+
 class UpdateClues
 {
-	//nobody knows what it get here
+public:
+	SimplePoint parentTransform;
 };
 
 #endif
