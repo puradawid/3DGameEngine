@@ -22,6 +22,15 @@ struct SimplePoint
 		this->y = 0.0;
 		this->z = 0.0;
 	}
+
+	SimplePoint operator+(SimplePoint p)
+	{
+		SimplePoint result;
+		result.x = this->x + p.x;
+		result.y = this->y + p.y;
+		result.z = this->z + p.z;
+		return result;
+	}
 } typedef SimplePoint;
 
 #endif
