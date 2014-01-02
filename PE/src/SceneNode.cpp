@@ -30,6 +30,11 @@ void SceneNode::render(RenderClues* rc)
 
 void SceneNode::update(UpdateClues* uc)
 {
+	if(uc != NULL)
+		absoluteTransform = uc->parentTransform;
+	else
+		uc = new UpdateClues();
+	uc->parentTransform = absoluteTransform + translation;
 	for(auto node : childs)
 	{
 		node->update(uc);
@@ -64,5 +69,6 @@ SceneNode::SceneNode()
 void SceneNode::move(SimplePoint vector)
 {
 	translation = translation + vector;
+	absoluteTransform = absoluteTransform + vector;
 	update(NULL);
 }

@@ -12,7 +12,7 @@ class SceneNode
 {
 	static int counter;
 	SimplePoint rotation, translation, scale;
-	SimplePoint absolute_pos;
+	SimplePoint absoluteTransform;
 	ObjectId id;
 protected:
 	RenderStrategy* rs;
