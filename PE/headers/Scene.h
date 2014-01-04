@@ -5,6 +5,8 @@
 #include "Camera.h"
 #include "SceneIterator.h"
 
+#include <stdlib.h>
+
 class Scene
 {
 	SceneNode* root;
@@ -17,6 +19,8 @@ public:
 	void setRoot(SceneNode*);
 	SceneNode* getRoot();
 	SceneIterator* getIterator();
+	void setCamera(Camera* mainCamera) {if (mainCamera != NULL) this->mainCamera = mainCamera; }
+	Camera* getCurrentCamera() { return mainCamera; }
 };
 
 #endif
