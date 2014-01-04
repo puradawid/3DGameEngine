@@ -445,6 +445,9 @@ void display()
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    //camera
+    Game::getGameInstance()->scene->getCurrentCamera()->updateWorld();
+
     //drawing
 
     RenderClues* rc = new RenderClues();
