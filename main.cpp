@@ -31,6 +31,9 @@
 #include "3dmodel/headers/Figure3DNode.h"
 #include "3dmodel/headers/OBJBuilder.h"
 #include "3dmodel/headers/XMLSceneBuilder.h"
+#include "3dmodel/headers/Animation.h"
+#include "3dmodel/headers/AnimationBuilder.h"
+
 
 using namespace std;
 
@@ -320,7 +323,8 @@ int main(int argc, char** argv) {
 	OBJBuilder builder("resources/obj/rocket.obj");
 	XMLSceneBuilder xsb("resources/scene.xml");
 	world = dynamic_cast<TreeScene*>(xsb.buildScene());
-	//world = new TreeScene();
+    Animation* anim = AnimationBuilder::parseAnimation("resources/animation.xml");
+	//world = new TreeScene(); 
 
 	Figure3D* rocket = builder.build();
 
