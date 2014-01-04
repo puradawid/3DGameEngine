@@ -5,6 +5,7 @@
 #include "./headers/StaticObject.h"
 #include "./headers/LineRenderStrategy.h"
 #include "./headers/MaterialRenderStrategy.h"
+#include "./headers/Camera.h"
 
 #include <stdio.h>
 
@@ -38,6 +39,10 @@ public:
 		sn->setRenderStrategy(dynamic_cast<RenderStrategy*>(new MaterialRenderStrategy()));
 		this->getScene()->getRoot()->addNode(sn);
 		rocket = dynamic_cast<SceneNode*>(sn);
+		Camera* camera = new Camera();
+		this->getScene()->getRoot()->addNode(camera);
+		this->getScene()->setCamera(camera);
+		camera->move(SimplePoint(0,0,10));
 	}
 };
 int main()
