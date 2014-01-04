@@ -17,8 +17,11 @@
  */
 class Camera : public SceneNode
 {
+	friend void display();
 private:
 	CameraState currentState; //current state of camera (structure)
+protected:
+	void updateWorld();
 public:
 	virtual void update(UpdateClues*);
 	virtual ~Camera();
