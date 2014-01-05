@@ -3,7 +3,7 @@
 
 class Collision
 {
-	//empty for now
+	std::vector<SceneNode*> objects;
 };
 
 #endif
