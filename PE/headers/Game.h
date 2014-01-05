@@ -34,7 +34,7 @@
  friend void reshape(int, int);
  friend void keyboard_event(unsigned char, int, int);
  friend void keyboard_special_event(int, int, int);
- friend void mouse_function(int);
+ friend void mouse_function(int, int);
  friend void msTick();
 
 
