@@ -6,6 +6,9 @@
 #include "./headers/LineRenderStrategy.h"
 #include "./headers/MaterialRenderStrategy.h"
 #include "./headers/Camera.h"
+#include "./headers/UserEventManager.h"
+#include "./headers/UserEventObserver.h"
+#include "./headers/UserEventArgs.h"
 
 #include <stdio.h>
 
@@ -27,6 +30,18 @@ public:
 	}
 };
 
+class MovementObserver : public UserEventObserver
+{
+public:
+	virtual void handleEvent(UserEventArgs* arg)
+	{
+		if(arg->type = InputType::SpecialKeyboard)
+		{
+			printf("Event!\n");
+		}
+	}
+};
+
 class MyGame : public Game
 {
 
@@ -43,6 +58,7 @@ public:
 		this->getScene()->getRoot()->addNode(camera);
 		this->getScene()->setCamera(camera);
 		camera->move(SimplePoint(0,0,10));
+		getUserEventManager()->addObserver(new MovementObserver());
 	}
 };
 int main()
