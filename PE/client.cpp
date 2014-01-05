@@ -35,9 +35,10 @@ class MovementObserver : public UserEventObserver
 public:
 	virtual void handleEvent(UserEventArgs* arg)
 	{
-		if(arg->type = InputType::SpecialKeyboard)
+		if(arg->isSpecialKeyboard())
 		{
 			printf("Event!\n");
+			rocket->move(SimplePoint(0,0,1));
 		}
 	}
 };
