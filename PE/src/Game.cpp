@@ -466,7 +466,8 @@ void display()
 
 void mouse_function(int x, int y)
 {
-	//push mouse event
+	UserEventArgs* args = new UserEventArgs();
+    Game::getGameInstance()->userEventManager->propagateEvent(args);
 }
 
 void reshape(int width, int height)
@@ -483,12 +484,16 @@ void reshape(int width, int height)
 
 void keyboard_event(unsigned char key, int x, int y)
 {
-	//here is event from keyboard
+	UserEventArgs* args = new UserEventArgs(InputType::Keyboard, key);
+    Game::getGameInstance()->userEventManager->propagateEvent(args);
+    delete args;
 }
 
 void keyboard_special_event(int event, int x, int y)
 {
-
+    UserEventArgs* args = new UserEventArgs(InputType::SpecialKeyboard, event);
+    Game::getGameInstance()->userEventManager->propagateEvent(args);
+    delete args;
 }
 
 void Game::stop()
@@ -500,6 +505,7 @@ Game::Game()
 {
     config = dynamic_cast<GameConfig*>(new TypicalConfig());
     timerClock = new TimerClock();
+    userEventManager = new UserEventManager();
     scene = new Scene();
     objPool = new OBJPool();
     singleton = this;
