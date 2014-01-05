@@ -12,6 +12,7 @@ protected:
 	InputType type;
 	char event;
 public:
+	bool isSpecialKeyboard(); 
 	bool isKeyboard();
 	bool isMouse();
 	UserEventArgs()
