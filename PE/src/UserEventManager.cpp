@@ -24,3 +24,11 @@ void UserEventManager::notifyObservers(UserEventArgs* userEventArgs){
 		observers[j]->handleEvent(userEventArgs);
 	}
 }
+
+void UserEventManager::propagateEvent(UserEventArgs* arg)
+{
+	for(auto item : observers)
+	{
+		item->handleEvent(arg);
+	}
+}
