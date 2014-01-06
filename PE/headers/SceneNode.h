@@ -16,7 +16,6 @@ class SceneNode
 	ObjectId id;
 protected:
 	RenderStrategy* rs;
-	std::vector<SceneNode*> childs;
 	SimplePoint getTranslation() { return translation; }
 	SimplePoint getRotation() { return rotation; }
 	SimplePoint getScale() { return scale; }
@@ -28,7 +27,7 @@ public:
 	void setRenderStrategy(RenderStrategy*);
 	void move(SimplePoint vector);
 	SceneNode();
-
+	std::vector<SceneNode*> childs;
 	virtual void render(RenderClues*);
 	virtual void update(UpdateClues*);
 };
