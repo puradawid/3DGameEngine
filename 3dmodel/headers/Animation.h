@@ -11,11 +11,12 @@ class Animation
 protected:
 	TreeNode* object;
 	std::vector<Frame*> frames;
-	GLboolean playing = false;
+	GLboolean playing;
 public:
 	Animation()
 	{
 		object = NULL;
+		playing = false;
 	}
 	void assignNode(TreeNode* object)
 	{
@@ -35,7 +36,7 @@ public:
 
 		for (int i = 0; i < frames_count; i++)
 		{
-			if (frames[i]->elapsed_time >= ms && frames[i + 1] <= ms)
+			if (frames[i]->elapsed_time >= ms && frames[i + 1]->elapsed_time <= ms)
 			{
 				GLfloat alpha = ((frames[i + 1]->elapsed_time - ms) / (frames[i + 1]->elapsed_time - frames[i]->elapsed_time)); // Rzutowanie na float?
 
