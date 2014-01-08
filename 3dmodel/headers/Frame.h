@@ -6,6 +6,8 @@
 
 class Frame
 {
+	friend class Animation;
+
 protected:
 	int elapsed_time;
 	Point rotation, scale, translation;
