@@ -3,7 +3,7 @@
 #simple compile
 
 CC=g++
-OPTS=-pg
+OPTS=-pg -ggdb
 LIBS=-lopengl32 -lglu32 -Llib -lglut32
 
 compile:
