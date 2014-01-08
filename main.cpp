@@ -318,6 +318,17 @@ void generateKloc(float x, float y, float z)
 	world->getRoot()->addChild(t);
 }
 
+void animate(GLint value)
+{
+        //if (animation->is_playing())
+        //{
+                // Update wywo³any z animacji
+                // Dobrze by³oby to wyniesc do klasy tylko, ze musi wykonywac te funkcje ponizej; chyba ze je tez mozna przeniesc
+        //      glutTimerFunc(50, animate, 0);
+        //      glutPostRedisplay();
+        //}
+}
+
 
 int main(int argc, char** argv) {
 	OBJBuilder builder("resources/obj/rocket.obj");
