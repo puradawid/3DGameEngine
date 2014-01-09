@@ -49,6 +49,8 @@ static Perspective perspective;
 
 TreeScene* world;
 
+Animation* animation;
+
 GLfloat* light;
 
 //render method
@@ -318,28 +320,41 @@ void generateKloc(float x, float y, float z)
 	world->getRoot()->addChild(t);
 }
 
+int time;
+
 void animate(GLint value)
 {
-        //if (animation->is_playing())
-        //{
+        if (animation->is_playing())
+        {
                 // Update wywo³any z animacji
                 // Dobrze by³oby to wyniesc do klasy tylko, ze musi wykonywac te funkcje ponizej; chyba ze je tez mozna przeniesc
-        //      glutTimerFunc(50, animate, 0);
-        //      glutPostRedisplay();
-        //}
+              time += 50; 
+              animation->tick(time);
+              glutTimerFunc(50, animate, 0);
+              reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+              printf("Animate!\n");
+        } else
+        {
+            time = 0;
+        }
 }
 
 
 int main(int argc, char** argv) {
+    time = 0;
 	OBJBuilder builder("resources/obj/rocket.obj");
 	XMLSceneBuilder xsb("resources/scene.xml");
 	world = dynamic_cast<TreeScene*>(xsb.buildScene());
-    Animation* anim = AnimationBuilder::parseAnimation("resources/animation.xml");
+    animation = AnimationBuilder::parseAnimation("resources/animation.xml");
+
 	//world = new TreeScene(); 
 
 	Figure3D* rocket = builder.build();
+    animation->assignNode(world->getRoot());
+    animation->start_playing();
 
 	glut_init(&argc, argv); //initialize first GLUT window
+    glutTimerFunc(50, animate, 0);
 
     //builder.build();
 
