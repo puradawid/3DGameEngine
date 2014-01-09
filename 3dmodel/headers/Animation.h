@@ -26,19 +26,18 @@ public:
 	{
 		this->frames.push_back(frame);
 	}
-	void tick(GLint ms, TreeNode* object)
+	void tick(GLint ms)
 	{
 		Point new_position;
 		Point new_angle;
 		Point new_scale;
 
 		int frames_count = frames.size() - 1; // Je¿eli i = ostatnia klatka to koniec animacji
-
 		for (int i = 0; i < frames_count; i++)
 		{
-			if (frames[i]->elapsed_time >= ms && frames[i + 1]->elapsed_time <= ms)
+			if (frames[i]->elapsed_time <= ms && frames[i + 1]->elapsed_time >= ms)
 			{
-				GLfloat alpha = ((frames[i + 1]->elapsed_time - ms) / (frames[i + 1]->elapsed_time - frames[i]->elapsed_time)); // Rzutowanie na float?
+				GLfloat alpha = (((GLfloat)frames[i + 1]->elapsed_time - ms) / (GLfloat)(frames[i + 1]->elapsed_time - frames[i]->elapsed_time)); // Rzutowanie na float?
 
 				new_position.x = alpha * frames[i]->translation.x + (1.0f - alpha) * frames[i + 1]->translation.x;
 				new_position.y = alpha * frames[i]->translation.y + (1.0f - alpha) * frames[i + 1]->translation.y;
