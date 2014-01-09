@@ -13,7 +13,7 @@ protected:
 	Point rotation, scale, translation;
 
 public:
-	Frame(Point rotation, Point scale, Point translatin, int elapsed_time)
+	Frame(Point rotation, Point scale, Point translation, int elapsed_time)
 	{
 		this->rotation = rotation;
 		this->scale = scale;
