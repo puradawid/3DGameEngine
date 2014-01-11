@@ -1,4 +1,5 @@
 #include "../headers/SceneIterator.h"
+#include <stdlib.h>
 
 bool SceneIterator::hasNext(){
 	SceneNode* lastElement = this->end();
@@ -31,7 +32,7 @@ SceneNode* SceneIterator::next(){ // if path size is 0 we know we're starting fr
 		if (current->childs.size() > 0){
 			path.push_back(std::make_pair(current,0)); // add root to path
 			current = current->childs[0];
-			path.push_back(std::make_pair(current,0); // add root's child to path
+			path.push_back(std::make_pair(current,0)); // add root's child to path
 			return current;
 		}
 	}
