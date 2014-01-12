@@ -8,11 +8,14 @@
 #include "RenderClues.h"
 #include "SimplePoint.h"
 #include "RenderStrategy.h"
+#include "BoundingBox.h"
+
 class SceneNode
 {
 	static int counter;
 	SimplePoint rotation, translation, scale;
-	SimplePoint absoluteTransform;
+	SimplePoint absoluteTransform, absoluteRotation, absoluteScale;
+	BoundingBox* bb;
 	ObjectId id;
 protected:
 	RenderStrategy* rs;
@@ -27,6 +30,7 @@ public:
 	void setRenderStrategy(RenderStrategy*);
 	void move(SimplePoint vector);
 	SceneNode();
+	SceneNode(BoundingBox*);
 	std::vector<SceneNode*> childs;
 	virtual void render(RenderClues*);
 	virtual void update(UpdateClues*);
