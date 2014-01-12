@@ -31,13 +31,26 @@ void SceneNode::render(RenderClues* rc)
 void SceneNode::update(UpdateClues* uc)
 {
 	if(uc != NULL)
+	{
 		absoluteTransform = uc->parentTransform;
+		absoluteRotation = uc->parentRotation;
+		absoluteScale = uc->parentScale;
+	}
 	else
 		uc = new UpdateClues();
+
 	uc->parentTransform = absoluteTransform + translation;
+	uc->parentRotation = absoluteRotation + rotation;
+	uc->parentScale = absoluteScale + scale;
+
 	for(auto node : childs)
 	{
 		node->update(uc);
+	}
+
+	if(bb != NULL) 
+	{
+		bb->translate(absoluteTransform + translation);
 	}
 }
 
@@ -64,6 +77,12 @@ void SceneNode::revertTransform()
 SceneNode::SceneNode()
 {
 	this->scale = SimplePoint(1,1,1);
+}
+
+SceneNode::SceneNode(BoundingBox* bb)
+{
+	this->scale = SimplePoint(1,1,1);
+	this->bb = bb;
 }
 
 void SceneNode::move(SimplePoint vector)
