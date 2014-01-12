@@ -1,10 +1,14 @@
 #ifndef SIMPLEPOINT_H
 #define SIMPLEPOINT_H
+
 #ifdef _MSC_VER
-#include <Windows.h>
+	#include <Windows.h>
 #endif
+
 #include <Gl/gl.h>
 #include <math.h>
+
+#define M_PI 3.14
 
 struct SimplePoint
 {
@@ -31,7 +35,7 @@ struct SimplePoint
 		result.x = this->x + p.x;
 		result.y = this->y + p.y;
 		result.z = this->z + p.z;
-		
+
 		return result;
 	}
 
