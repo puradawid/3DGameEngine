@@ -17,6 +17,8 @@ class VertexArrayMesh : public Mesh
 	void setMesh(std::vector<std::vector<Point>*>*);
 public:
 	virtual void render(RenderClues*); //rendering mesh
+	virtual Point getPoint(int index);
+	virtual int getSize();
 	VertexArrayMesh();
 };
 
