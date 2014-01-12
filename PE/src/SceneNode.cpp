@@ -32,16 +32,16 @@ void SceneNode::update(UpdateClues* uc)
 {
 	if(uc != NULL)
 	{
-		absoluteTransform = uc->parentTransform;
-		absoluteRotation = uc->parentRotation;
-		absoluteScale = uc->parentScale;
+		absoluteTransform = uc->parentTransform + translation;
+		absoluteRotation = uc->parentRotation + rotation;
+		absoluteScale = uc->parentScale + scale;
 	}
 	else
 		uc = new UpdateClues();
 
-	uc->parentTransform = absoluteTransform + translation;
-	uc->parentRotation = absoluteRotation + rotation;
-	uc->parentScale = absoluteScale + scale;
+	uc->parentTransform = absoluteTransform;
+	uc->parentRotation = absoluteRotation;
+	uc->parentScale = absoluteScale;
 
 	for(auto node : childs)
 	{
@@ -50,7 +50,7 @@ void SceneNode::update(UpdateClues* uc)
 
 	if(bb != NULL) 
 	{
-		bb->translate(absoluteTransform + translation);
+		bb->translate(absoluteTransform);
 	}
 }
 
@@ -89,5 +89,14 @@ void SceneNode::move(SimplePoint vector)
 {
 	translation = translation + vector;
 	absoluteTransform = absoluteTransform + vector;
+	if(bb != NULL) bb->translate(absoluteTransform);
+	update(NULL);
+}
+
+void SceneNode::rotate(SimplePoint vector)
+{
+	rotation = rotation + vector;
+	absoluteRotation = absoluteRotation + vector;
+	if(bb != NULL) bb->rotate(absoluteRotation);
 	update(NULL);
 }

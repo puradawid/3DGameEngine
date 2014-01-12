@@ -10,6 +10,7 @@ class GameObject : public SceneNode
 	Mesh* mesh;
 public:
 	virtual void render(RenderClues*);
+	GameObject(Mesh* mesh);
 };
 
 #endif

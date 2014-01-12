@@ -2,5 +2,5 @@
 
 void GameObject::render(RenderClues* renderClues) 
 {
-
+	this->mesh->render(renderClues);
 }

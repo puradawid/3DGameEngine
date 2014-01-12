@@ -8,8 +8,8 @@
 void Camera::update(UpdateClues* uc)
 {
 	SceneNode::update(uc);
-	currentState.p = getTranslation();
-	currentState.rot = getRotation();
+	currentState.p =  getAbsoluteTranslation();
+	currentState.rot = getAbsoluteRotation();
 }
 
 Camera::~Camera(){

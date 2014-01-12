@@ -31,7 +31,7 @@ Point VertexArrayMesh::getPoint(int index)
 	int result_index = 0;
 	int count_polys = mesh->size();
 	for(int i = 0; i < count_polys; i++)
-		for(int j = 0; (*mesh)[i]->size(); i++)
+		for(int j = 0; j < (*mesh)[i]->size(); j++)
 			if(result_index++ == index) return (*(*mesh)[i])[j];
 	return result;
 }
@@ -41,7 +41,7 @@ int VertexArrayMesh::getSize()
 	int result = 0;
 	int count_polys = mesh->size();
 	for(int i = 0; i < count_polys; i++)
-		for(int j = 0; (*mesh)[i]->size(); i++)
+		for(int j = 0; j < (*mesh)[i]->size(); j++)
 			result++;
 	return result;
 }

@@ -15,13 +15,16 @@ class SceneNode
 	static int counter;
 	SimplePoint rotation, translation, scale;
 	SimplePoint absoluteTransform, absoluteRotation, absoluteScale;
-	BoundingBox* bb;
 	ObjectId id;
 protected:
 	RenderStrategy* rs;
+	BoundingBox* bb;
 	SimplePoint getTranslation() { return translation; }
 	SimplePoint getRotation() { return rotation; }
 	SimplePoint getScale() { return scale; }
+	SimplePoint getAbsoluteTranslation() { return absoluteTransform; }
+	SimplePoint getAbsoluteRotation() { return absoluteRotation; }
+	SimplePoint getAbsoluteScale() { return absoluteScale; }
 	void transform();
 	void revertTransform();
 public:
@@ -29,6 +32,7 @@ public:
 	void removeNode(ObjectId);
 	void setRenderStrategy(RenderStrategy*);
 	void move(SimplePoint vector);
+	void rotate(SimplePoint vector);
 	SceneNode();
 	SceneNode(BoundingBox*);
 	std::vector<SceneNode*> childs;

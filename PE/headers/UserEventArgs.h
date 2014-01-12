@@ -24,6 +24,10 @@ public:
 		this->type = type;
 		this->event = event;
 	}
+	char getEvent()
+	{
+		return event;
+	}
 };
 
 #endif
