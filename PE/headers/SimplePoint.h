@@ -8,7 +8,7 @@
 #include <Gl/gl.h>
 #include <math.h>
 
-#define M_PI 3.14
+#define M_PI 3.14159265358979323846
 
 struct SimplePoint
 {
