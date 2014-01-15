@@ -4,6 +4,7 @@
 #include "CameraState.h"
 #include "SceneNode.h"
 #include "UpdateClues.h"
+#include "BoundingBox.h"
 
 #ifdef _MSC_VER
 	#define _USE_MATH_DEFINES
@@ -18,6 +19,7 @@
 class Camera : public SceneNode
 {
 	friend void display();
+	friend class BoundingBox;
 private:
 	CameraState currentState; //current state of camera (structure)
 protected:

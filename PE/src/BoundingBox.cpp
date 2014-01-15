@@ -1,6 +1,9 @@
 #include "../headers/BoundingBox.h"
 
 #include <GL/gl.h>
+#include <limits>
+
+#include "../headers/Game.h"
 
 using namespace std;
 
@@ -41,8 +44,14 @@ void drawLine(vector<SimplePoint> points, int i, int j)
 
 void BoundingBox::render()
 {
-	vector<SimplePoint> points = getAllPoints(rel_min, rel_max);
+	vector<SimplePoint> points = getAllPoints(min, max);
 	
+	glPushMatrix();
+
+	glLoadIdentity();
+
+	Game::getGameInstance()->getScene()->getCurrentCamera()->updateWorld();
+
 	drawLine(points, 0, 1);
 	drawLine(points, 1, 2);
 	drawLine(points, 2, 3);
@@ -55,6 +64,8 @@ void BoundingBox::render()
 	drawLine(points, 5, 0);
 	drawLine(points, 1, 6);
 	drawLine(points, 2, 7);
+
+	glPopMatrix();
 }
 
 void BoundingBox::recalculate()
@@ -109,7 +120,9 @@ vector<SimplePoint> BoundingBox::getAllPoints(SimplePoint min, SimplePoint max)
 
 pair<SimplePoint, SimplePoint> BoundingBox::getVectorFromPoints(vector<SimplePoint> points)
 {
-	SimplePoint min(1000,1000,1000), max(-1,-1,-1);
+	double dbl_min = -std::numeric_limits<double>::max();
+	double dbl_max = std::numeric_limits<double>::max();
+	SimplePoint min(dbl_max, dbl_max, dbl_max), max(dbl_min, dbl_min, dbl_min);
 	int points_size = points.size();
 	for(int i = 0; i < points_size; i++)
 	{
