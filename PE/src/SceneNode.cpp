@@ -62,10 +62,11 @@ void SceneNode::setRenderStrategy(RenderStrategy* rs)
 void SceneNode::transform()
 {
 	glPushMatrix();		//store matrix
+	glTranslatef(translation.x, translation.y, translation.z); //translate
 	glRotatef(rotation.x, 1, 0 , 0); //rotate x
 	glRotatef(rotation.y, 0, 1 , 0); //rotate y
 	glRotatef(rotation.z, 0, 0 , 1); //rotate z
-	glTranslatef(translation.x, translation.y, translation.z); //translate
+	
 	glScalef(scale.x, scale.y, scale.z); //scale
 }
 
