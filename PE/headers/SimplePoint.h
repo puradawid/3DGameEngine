@@ -42,9 +42,9 @@ struct SimplePoint
 	SimplePoint rotate(SimplePoint p)
 	{
 		SimplePoint r(*this);
-		double rad_x = p.x * (180/M_PI);
-		double rad_y = p.y * (180/M_PI);
-		double rad_z = p.z * (180/M_PI);
+		double rad_x = -p.x * (M_PI/180);
+		double rad_y = -p.y * (M_PI/180);
+		double rad_z = -p.z * (M_PI/180);
 
 		//rotate z
 		r.x = x * cos(rad_z) + y * sin(rad_z);
