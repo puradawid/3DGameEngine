@@ -245,7 +245,7 @@ inline void open_gl_init() {
     //light settings
     GLfloat light_diffuse[] = {1, 1, 1, 1};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-    GLfloat light_ambient[] = {0.2, 0.2, 0.2, 1};
+    GLfloat light_ambient[] = {0.7, 0.7, 0.7, 1};
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
     GLfloat light_specular[] = {0.1, 0.1, 0.1, 1};
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
@@ -253,7 +253,7 @@ inline void open_gl_init() {
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     
-    GLfloat light1_ambient[] = {0.2, 0.2, 0.2, 1.0};
+    GLfloat light1_ambient[] = {0.8, 0.8, 0.8, 1.0};
     GLfloat light1_diffuse[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light1_specular[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light1_position[] = {3, 0.0, 0.0, 1.0};
@@ -385,6 +385,7 @@ int main(int argc, char** argv) {
 
 #include "../headers/Game.h"
 #include "../headers/TimerClock.h"
+#include "../headers/Material.h" 
 
  //it is awful but..
  Game* Game::singleton = 0x0; //initialization of singleton expression
@@ -430,6 +431,37 @@ void tick()
     glutPassiveMotionFunc(mouse_function);
     glutIdleFunc(tick);
 
+    glShadeModel(GL_SMOOTH);
+    GLfloat light_diffuse[] = {1, 1, 1, 1};
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    GLfloat light_ambient[] = {0.3, 0.3, 0.3, 1};
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    GLfloat light_specular[] = {0.1, 0.1, 0.1, 1};
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    GLfloat light_position [] = {0,0,0,0};
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+    GLfloat light1_ambient[] = {0.2, 0.2, 0.2, 1.0};
+    GLfloat light1_diffuse[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat light1_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat light1_position[] = {3, 0.0, 0.0, 1.0};
+    GLfloat spot_direction[] = {-1.0, -1.0, 0.0};
+
+    glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
+    glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
+    glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1.5);
+    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.5);
+    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.2);
+
+    glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 45.0);
+    glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 2.0);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHT0);
+
     //provide control for GLUT
     timestamp = glutGet(GLUT_ELAPSED_TIME);
     glutMainLoop();
@@ -449,17 +481,19 @@ void display()
     Game::getGameInstance()->scene->getCurrentCamera()->updateWorld();
 
     //drawing
-
+    Material mat(0,0,0,0,0);
+    mat.Apply();
     RenderClues* rc = new RenderClues();
     Game::getGameInstance()->scene->render(rc);
     delete rc;
-
+    /*
     glBegin(GL_QUADS);
         glVertex3f(-1000.0, -0.5, 1000.0);
         glVertex3f(1000.0, -0.5, 1000.0);
         glVertex3f(1000.0, -0.5, -1000.0);
         glVertex3f(-1000.0, -0.5, -1000.0);
     glEnd();
+    */
 
     glutSwapBuffers();
 }
@@ -508,6 +542,7 @@ Game::Game()
     userEventManager = new UserEventManager();
     scene = new Scene();
     objPool = new OBJPool();
+    collisionDetector = new CollisionDetector();
     singleton = this;
 }
 
