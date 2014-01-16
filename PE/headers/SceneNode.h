@@ -13,8 +13,11 @@
 class SceneNode
 {
 	static int counter;
+	friend class CollisionDetector;
 	SimplePoint rotation, translation, scale;
 	SimplePoint absoluteTransform, absoluteRotation, absoluteScale;
+	TransformationType last;
+	SimplePoint last_transform;
 	ObjectId id;
 protected:
 	RenderStrategy* rs;
