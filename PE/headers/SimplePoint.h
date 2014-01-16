@@ -10,6 +10,13 @@
 
 #define M_PI 3.14159265358979323846
 
+enum TransformationType
+{
+	Translation,
+	Rotation,
+	Scale
+} typedef TransformationType;
+
 struct SimplePoint
 {
 	GLdouble x,y,z;
