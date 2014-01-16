@@ -431,17 +431,16 @@ void tick()
     glutPassiveMotionFunc(mouse_function);
     glutIdleFunc(tick);
 
-    glShadeModel(GL_SMOOTH);
     GLfloat light_diffuse[] = {1, 1, 1, 1};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-    GLfloat light_ambient[] = {0.3, 0.3, 0.3, 1};
+    GLfloat light_ambient[] = {0.6, 0.6, 0.6, 1};
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-    GLfloat light_specular[] = {0.1, 0.1, 0.1, 1};
+    GLfloat light_specular[] = {0.8, 0.8, 0.8, 1};
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
     GLfloat light_position [] = {0,0,0,0};
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-    GLfloat light1_ambient[] = {0.2, 0.2, 0.2, 1.0};
+    GLfloat light1_ambient[] = {0.6, 0.6, 0.6, 1.0};
     GLfloat light1_diffuse[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light1_specular[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light1_position[] = {3, 0.0, 0.0, 1.0};
@@ -460,7 +459,8 @@ void tick()
     glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 2.0);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT1);
-    glEnable(GL_LIGHT0);
+    //glEnable(GL_LIGHT0);
+    glShadeModel(GL_SMOOTH);
 
     //provide control for GLUT
     timestamp = glutGet(GLUT_ELAPSED_TIME);
