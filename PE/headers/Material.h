@@ -19,10 +19,10 @@ public:
         m_Emission = emission;
         m_Shininess = shininess;
         
-        float Ambient[] = {0.1, 0.1, 0.1, 1.0};
+        float Ambient[] = {0.2, 0.2, 0.2, 1.0};
         float Diffuse[] = {0.5, 0.5, 0.5, 1};
         float Specular[] = {0.4, 0.4, 0.4, 1.0};
-        float Emission[] = {0.1, 0.1, 0.1, 1.0};
+        float Emission[] = {0.4, 0.4, 0.4, 1.0};
         float Shininess = 0.9;
         
         m_Ambient = copyArray((float*)Ambient, 4);
