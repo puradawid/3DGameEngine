@@ -2,7 +2,10 @@
 #ifdef _MSC_VER
 	#include <Windows.h>
 #endif
+
 #include "../headers/SimplePoint.h"
+#include "../headers/Game.h"
+
 #include <GL\gl.h>
 #include <stdlib.h>
 
@@ -51,6 +54,7 @@ void SceneNode::update(UpdateClues* uc)
 	if(bb != NULL) 
 	{
 		bb->translate(absoluteTransform);
+		Game::getGameInstance();
 	}
 }
 
@@ -88,16 +92,28 @@ SceneNode::SceneNode(BoundingBox* bb)
 
 void SceneNode::move(SimplePoint vector)
 {
+	last_transform = vector; 
+	last = Translation;
 	translation = translation + vector;
 	absoluteTransform = absoluteTransform + vector;
-	if(bb != NULL) bb->translate(absoluteTransform);
+	if(bb != NULL)
+	{
+		bb->translate(absoluteTransform);
+		Game::getGameInstance()->getCollisionDetector()->notifyDetector(this, last, last_transform);
+	}
 	update(NULL);
 }
 
 void SceneNode::rotate(SimplePoint vector)
 {
+	last_transform = vector; 
+	last = Rotation;
 	rotation = rotation + vector;
 	absoluteRotation = absoluteRotation + vector;
-	if(bb != NULL) bb->rotate(absoluteRotation);
+	if(bb != NULL) 
+	{
+		bb->rotate(absoluteRotation);
+		Game::getGameInstance()->getCollisionDetector()->notifyDetector(this, last, last_transform);
+	}
 	update(NULL);
 }
