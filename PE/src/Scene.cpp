@@ -19,9 +19,9 @@ void Scene::update(UpdateClues* uc)
 	//update scene(driven by animation or something like that)
 }
 
-SceneIterator* getIterator()
+SceneIterator* Scene::getIterator()
 {
-	return NULL;
+	return new SceneIterator(Scene::getRoot());
 }
 
 SceneNode* Scene::getRoot()
