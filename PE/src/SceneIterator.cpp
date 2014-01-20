@@ -27,6 +27,11 @@ SceneNode* SceneIterator::end(){
 	}
 	return check;
 }
+
+SceneIterator::SceneIterator(SceneNode* root){
+	current = root;
+}
+
 SceneNode* SceneIterator::next(){ // if path size is 0 we know we're starting from the root
 	if (path.size() == 0){   
 		if (current->childs.size() > 0){
