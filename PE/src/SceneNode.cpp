@@ -82,6 +82,7 @@ void SceneNode::revertTransform()
 SceneNode::SceneNode()
 {
 	this->scale = SimplePoint(1,1,1);
+	this->bb = NULL;
 }
 
 SceneNode::SceneNode(BoundingBox* bb)
