@@ -102,12 +102,23 @@ public:
 
 class MyGame : public Game
 {
+	MeshBuildStrategy* mbs;
+
+	SceneNode* generateBox(double x, double y, double z)
+	{
+		StaticObject* sn = new StaticObject(this->getOBJPool()->getMesh(mbs, "./resources/obj/cube.obj"));
+		sn->setRenderStrategy(dynamic_cast<RenderStrategy*>(new MaterialRenderStrategy()));
+		sn->move(SimplePoint(x,y,z));
+		this->getScene()->getRoot()->addNode(sn);
+		return sn;
+	}
 
 public:
+
 	virtual void initializeGame(GameConfig* config)
 	{
 		this->getTimerClock()->addTimer(new MyTimer(1000, 10));
-		MeshBuildStrategy* mbs = dynamic_cast<MeshBuildStrategy*>(new VertexArrayBuildStrategy());
+		mbs = dynamic_cast<MeshBuildStrategy*>(new VertexArrayBuildStrategy());
 		getUserEventManager()->addObserver(new MovementObserver());
 
 		StaticObject* sn = new StaticObject(this->getOBJPool()->getMesh(mbs, "./resources/obj/tower.obj"));
@@ -120,24 +131,38 @@ public:
 		s2->move(SimplePoint(7,0,0));
 		this->getScene()->getRoot()->addNode(s2);
 
-		camera = new Camera();
-		this->getScene()->getRoot()->addNode(camera);
-		this->getScene()->setCamera(camera);
-		camera->move(SimplePoint(0,10,20));
-		camera->rotate(SimplePoint(-25,0,0));
-
 		StaticObject* s1 = new StaticObject(this->getOBJPool()->getMesh(mbs, "./resources/obj/rocket.obj"));
 		s1->setRenderStrategy(dynamic_cast<RenderStrategy*>(new MaterialRenderStrategy()));
 		this->getScene()->getRoot()->addNode(s1);
 		s1->move(SimplePoint(10,10,0));
-		//s1->rotate(SimplePoint(0,10,0));
+		s1->rotate(SimplePoint(0,90,0));
 		rocket = dynamic_cast<SceneNode*>(s1);
 		helper = s1;
 
+		camera = new Camera();
+		this->getScene()->setCamera(camera);
+		rocket->addNode(camera);
+		camera->move(SimplePoint(0,7,14));
+		camera->rotate(SimplePoint(0,-90,0));
+		camera->rotate(SimplePoint(-15, 0,0));
+
+		StaticObject* s3 = new StaticObject(this->getOBJPool()->getMesh(mbs, "./resources/obj/cube.obj"));
+		s3->setRenderStrategy(dynamic_cast<RenderStrategy*>(new MaterialRenderStrategy()));
+		this->getScene()->getRoot()->addNode(s3);
+		s3->move(SimplePoint(0,4,0));
 		getCollisionDetector()->addObserver(dynamic_cast<CollisionObserver*>(new CollisionObserverNotify()));
 		getCollisionDetector()->addCollisionable(s1);
 		getCollisionDetector()->addCollisionable(sn);
 		getCollisionDetector()->addCollisionable(s2);
+		getCollisionDetector()->addCollisionable(s3);
+
+		for(int i = 0; i < 100; i++)
+		{
+			//getCollisionDetector()->addCollisionable(generateBox(i*2,i*2,i*2));
+			generateBox(i*2,i*2,i*2);
+		}
+
+		rocket->update(NULL);
 	}
 };
 int main()
