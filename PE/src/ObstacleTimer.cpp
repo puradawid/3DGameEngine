@@ -1,7 +1,7 @@
-#include "./headers/Timer.h"
-#include "./headers/SimplePoint.h"
-#include "./headers/SceneNode.h"
-#include "EnemyObject.h"
+#include "../headers/Timer.h"
+#include "../headers/SimplePoint.h"
+#include "../headers/SceneNode.h"
+#include "../headers/EnemyObject.h"
 
 class ObstacleTimer : public Timer
 {
