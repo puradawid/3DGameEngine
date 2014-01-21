@@ -3,6 +3,7 @@
 
 class PECommand
 {
+public:
 	virtual void doCommand() = 0;
 };
 
