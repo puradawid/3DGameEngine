@@ -7,10 +7,10 @@
 class Mesh
 {
 public:
-	virtual void render(RenderClues*) {}; //print mesh on scene
-	virtual ~Mesh() {};
-	virtual Point getPoint(int index) {};
-	virtual int getSize() {};
+	virtual void render(RenderClues*); //print mesh on scene
+	virtual ~Mesh();
+	virtual Point getPoint(int index);
+	virtual int getSize();
 };
 
 #endif
