@@ -437,7 +437,7 @@ void tick()
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
     GLfloat light_specular[] = {0.8, 0.8, 0.8, 1};
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-    GLfloat light_position [] = {0,0,0,0};
+    GLfloat light_position [] = {0,10,0,0};
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
     GLfloat light1_ambient[] = {0.6, 0.6, 0.6, 1.0};
@@ -459,8 +459,10 @@ void tick()
     glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 2.0);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT1);
-    //glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT0);
+
     glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
 
     //provide control for GLUT
     timestamp = glutGet(GLUT_ELAPSED_TIME);
