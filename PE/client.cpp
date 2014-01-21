@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <GL/glut.h>
+#include <ctime>
 
 SceneNode* rocket;
 Camera* camera;
@@ -51,10 +52,15 @@ class CollisionObserverNotify : public CollisionObserver
 
 class KillCommand : public PECommand
 {
+	Game* game;
 public:
+	KillCommand(Game* game)
+	{
+		this->game = game;
+	}
 	virtual void doCommand()
 	{
-		rocket->move(SimplePoint(0,0,20));
+		game->stop();
 	}
 };
 
@@ -94,12 +100,12 @@ public:
 	{
 		if(arg->isSpecialKeyboard() && arg->getEvent() == GLUT_KEY_LEFT)
 		{
-			rocket->move(SimplePoint(jump, 0, 0));
+			rocket->move(SimplePoint(-jump, 0, 0));
 		}
 
 		if(arg->isSpecialKeyboard() && arg->getEvent() == GLUT_KEY_RIGHT)
 		{
-			rocket->move(SimplePoint(-jump, 0, 0));
+			rocket->move(SimplePoint(jump, 0, 0));
 		}
 		if(arg->isSpecialKeyboard() && arg->getEvent() == GLUT_KEY_UP)
 		{
@@ -109,6 +115,11 @@ public:
 		if(arg->isSpecialKeyboard() && arg->getEvent() == GLUT_KEY_DOWN)
 		{
 			rocket->move(SimplePoint(0, -jump, 0));
+		}
+
+		if(arg->isKeyboard() && arg->getEvent() == ' ')
+		{
+			rocket->move(SimplePoint(0, 0, -jump*3));
 		}
 	}
 };
@@ -124,6 +135,11 @@ class MyGame : public Game
 		sn->move(SimplePoint(x,y,z));
 		this->getScene()->getRoot()->addNode(sn);
 		return sn;
+	}
+
+	void end()
+	{
+		Game::stop();
 	}
 
 	void generateBoxLine(SimplePoint begin, SimplePoint end)
@@ -193,14 +209,17 @@ public:
 		camera->rotate(SimplePoint(-15, 0,0));
 
 		getCollisionDetector()->addObserver(dynamic_cast<CollisionObserver*>(new CollisionObserverNotify()));
-		CollisionObserverKiller* cok = new CollisionObserverKiller(new KillCommand());
+		CollisionObserverKiller* cok = new CollisionObserverKiller(new KillCommand(this));
 		getCollisionDetector()->addObserver(dynamic_cast<CollisionObserver*>(cok));
 
 		getCollisionDetector()->addCollisionable(s1);
 
-		for(int i = 0; i < 20; i++)
+		srand(time(0));
+		for(int i = 0; i < 80; i++)
 		{
-			SceneNode* box = generateBox(0, 20, -i*20);
+			double x = -10 + 40 * rand()/RAND_MAX;
+			double y = 1 + 50 * rand()/RAND_MAX;
+			SceneNode* box = generateBox(x, y, 100 - i*5);
 			cok->addKiller(box);
 			getCollisionDetector()->addCollisionable(box);
 		}
