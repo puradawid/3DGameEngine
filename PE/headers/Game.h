@@ -37,7 +37,6 @@
  friend void mouse_function(int, int);
  friend void msTick();
 
-
  private:
     Scene* scene;
     TimerClock* timerClock;
