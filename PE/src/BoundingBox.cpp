@@ -2,13 +2,8 @@
 
 #include <GL/gl.h>
 #include <limits>
-#include <iostream>
-#include "../headers/Game.h"
-#ifdef _MSC_VER
-#undef max
-#undef min
-#endif
 
+#include "../headers/Game.h"
 
 using namespace std;
 
@@ -125,23 +120,23 @@ vector<SimplePoint> BoundingBox::getAllPoints(SimplePoint min, SimplePoint max)
 
 pair<SimplePoint, SimplePoint> BoundingBox::getVectorFromPoints(vector<SimplePoint> points)
 {
-	double dbl_min = -std::numeric_limits<double>::min();
+	double dbl_min = -std::numeric_limits<double>::max();
 	double dbl_max = std::numeric_limits<double>::max();
-	SimplePoint minPoint(dbl_max, dbl_max, dbl_max), maxPoint(dbl_min, dbl_min, dbl_min);
+	SimplePoint min(dbl_max, dbl_max, dbl_max), max(dbl_min, dbl_min, dbl_min);
 	int points_size = points.size();
 	for(int i = 0; i < points_size; i++)
 	{
-		if (minPoint.x > points[i].x) minPoint.x = points[i].x;
-		if (maxPoint.x < points[i].x) maxPoint.x = points[i].x;
+		if(min.x > points[i].x) min.x = points[i].x;
+		if(max.x < points[i].x) max.x = points[i].x;
 
-		if (minPoint.y > points[i].y) minPoint.y = points[i].y;
-		if (maxPoint.y < points[i].y) maxPoint.y = points[i].y;
+		if(min.y > points[i].y) min.y = points[i].y;
+		if(max.y < points[i].y) max.y = points[i].y;
 
-		if (minPoint.z > points[i].z) minPoint.z = points[i].z;
-		if (maxPoint.z < points[i].z) maxPoint.z = points[i].z;
+		if(min.z > points[i].z) min.z = points[i].z;
+		if(max.z < points[i].z) max.z = points[i].z;
 	}
 
-	return pair<SimplePoint, SimplePoint>(minPoint, maxPoint);
+	return pair<SimplePoint, SimplePoint>(min, max);
 }
 
 bool BoundingBox::collision(BoundingBox* collisioned)
